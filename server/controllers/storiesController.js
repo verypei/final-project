@@ -27,7 +27,13 @@ class storiesController{
             res.status(201).json(data);
         })
         .catch(err=>{
-            res.status(500).json("internal server error");
+            if(err.message){
+                res.status(400).json({
+                    message: err.message
+                })
+            }else{
+                res.status(500).json("internal server error");
+            }
         })
     }
 

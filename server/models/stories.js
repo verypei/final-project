@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       validate:{
         notEmpty:{
-          message:"can't empty"
+          message:"title can't be empty"
         }
       }
     },
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.TEXT,
       validate:{
         notEmpty:{
-          message:"can't empty"
+          message:"conten can't be empty"
         }
       }
     },
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       validate:{
         notEmpty:{
-          message:"can't empty"
+          message:"theme can't be empty"
         }
       }
     },
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       validate:{
         notEmpty:{
-          message:"can't empty"
+          message:"created by can't be empty"
         }
       }
     }
