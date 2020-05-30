@@ -3,33 +3,49 @@ module.exports = (sequelize, DataTypes) => {
   const stories = sequelize.define('stories', {
     title: {
       type:DataTypes.STRING,
+      allowNull: false,
       validate:{
         notEmpty:{
-          message:"title can't be empty"
+          msg:"title can't be empty"
+        },
+        notNull:{
+          msg:"title can't be empty"
         }
       }
     },
     content: {
       type:DataTypes.TEXT,
+      allowNull: false,
       validate:{
         notEmpty:{
-          message:"conten can't be empty"
+          msg:"content can't be empty"
+        },
+        notNull:{
+          msg:"content can't be empty"
         }
       }
     },
     theme: {
       type:DataTypes.STRING,
+      allowNull: false,
       validate:{
         notEmpty:{
-          message:"theme can't be empty"
+          msg:"theme can't be empty"
+        },
+        notNull:{
+          msg:"theme can't be empty"
         }
       }
     },
     createdBy: {
       type:DataTypes.STRING,
+      allowNull: false,
       validate:{
         notEmpty:{
-          message:"created by can't be empty"
+          msg:"created by can't be empty"
+        },
+        notNull:{
+          msg:"created by can't be empty"
         }
       }
     }
