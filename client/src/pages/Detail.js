@@ -1,11 +1,14 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import DetailStory from "../components/DetailStory";
 
 export default () => {
-  const { id } = useParams();
   return (
     <>
-      <h1>Ini Detail story dengan id = {id}</h1>
+      <h1>Detail story </h1>
+      <Container className="d-flex justify-content-md-center my-2">
+        <DetailStory />
+      </Container>
     </>
   );
 };
