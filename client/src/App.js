@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import socketIOClient from 'socket.io-client';
+const socketIOEndpoint = 'http://127.0.0.1:3001';
+
+let socket = null;
 
 function App() {
+
+  useEffect(() => {
+    socket = new socketIOClient(socketIOEndpoint);
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -24,3 +33,4 @@ function App() {
 }
 
 export default App;
+export {socket};

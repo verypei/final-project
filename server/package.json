@@ -2,10 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest --detectOpenHandles --runInBand --forceExit --coverage",
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "jest": "^26.0.1",
     "pg": "^8.2.1",
     "sequelize": "^5.21.11",
+    "socket.io": "^2.3.0",
     "supertest": "^4.0.2"
   }
 }
