@@ -3,6 +3,8 @@ const request = require('supertest')
 const {Story, sequelize} = require('../models')
 const {queryInterface} = sequelize
 
+let createdStoryId = null;
+
 describe('Stories Routes Test', () => {
     const AddStory = {
         title: 'Morna',
@@ -67,7 +69,7 @@ describe('Stories Routes Test', () => {
             .then(response => {
                 const {body,status} = response
                 expect(status).toBe(400)
-                expect(body).toHaveProperty('message',`theme can't be empty`)
+                expect(body).toHaveProperty('message',`created by can't be empty`)
                 done()
             })
         })
@@ -82,6 +84,7 @@ describe('Stories Routes Test', () => {
                 expect(body).toHaveProperty('content','Morna is a unique world for all players to Experience. This world is a land based on the fantasy series of Morna Tales.')
                 expect(body).toHaveProperty('theme','Game')
                 expect(body).toHaveProperty('createdBy','Jessica')
+                createdStoryId = body.id;
                 done()
             })
         })
@@ -96,9 +99,9 @@ describe('Stories Routes Test', () => {
                 done()
             })
         })
-        test(`200  get one story - should return error if Can't get one story`, (done) => {
+        test(`200  get one story - should return a story`, (done) => {
             request(app)
-            .get('/stories/detail/39')
+            .get(`/stories/detail/${createdStoryId}`)
             .then(response => {
                 const {body,status} = response
                 console.log(body)
@@ -106,17 +109,17 @@ describe('Stories Routes Test', () => {
                 expect(body).toHaveProperty('title','Morna')
                 expect(body).toHaveProperty('content','Morna is a unique world for all players to Experience. This world is a land based on the fantasy series of Morna Tales.')
                 expect(body).toHaveProperty('theme','Game')
-                expect(body).toHaveProperty('createdBy', null)
+                expect(body).toHaveProperty('createdBy', 'Jessica')
                 done()
             })
         })
-        test(`200  get all stories - should return error if Can't get all stories`, (done) => {
+        test(`200  get all stories - should return all stories`, (done) => {
             request(app)
             .get('/stories/')
             .then(response => {
                 const {body,status} = response
                 console.log(body)
-                expect(status).toBe(201)
+                expect(status).toBe(200)
                 done()
             })
         })
