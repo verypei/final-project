@@ -4,15 +4,19 @@ import { Navbar, Nav } from "react-bootstrap";
 
 export default function NavBar() {
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar className="navbar">
       <Navbar.Brand>
-        <Link to="/">Team 3</Link>
+        <Link to="/">
+          <p className="navbarLink">login</p>
+        </Link>
       </Navbar.Brand>
+
       <Nav className="mr-auto">
         <Link to="/story" className="mx-3">
-          List Story
+          <p className="navbarLink">stories</p>
         </Link>
       </Nav>
+
     </Navbar>
   );
 }

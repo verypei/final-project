@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { CardDeck, Card, Button } from "react-bootstrap";
+import { CardDeck, Card} from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getStoryDetail } from "../store/actions/storiesAction";
 import Speech from "speak-tts";
 
+
 export default () => {
   const { id } = useParams();
   const { storyDetail, loading } = useSelector((state) => state.stories);
-  //   console.log(storyDetail, loading);
+    console.log(storyDetail, loading);
 
   const speech = new Speech(); // will throw an exception if not browser supported
   if (speech.hasBrowserSupport()) {
@@ -81,16 +82,19 @@ export default () => {
     <>
       <CardDeck>
         <Card>
+
           <Card.Body>
             <Card.Title>{storyDetail.title}</Card.Title>
             <Card.Text>{storyDetail.content}</Card.Text>
           </Card.Body>
+
           <Card.Footer>
-            <small className="text-muted">{storyDetail.createdBy}</small>
-            <Button variant="dark" onClick={() => _init()} className="mx-3">
+            <small className="textMutedCreatedBy">{storyDetail.createdBy}</small>
+            <button variant="dark" onClick={() => _init()} className="buttonPlay button">
               Play
-            </Button>
+            </button>
           </Card.Footer>
+          
         </Card>
       </CardDeck>
     </>

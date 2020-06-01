@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 export default (props) => {
@@ -10,20 +10,21 @@ export default (props) => {
     <>
       <Row>
         <Col>
-          <Card sm={4} md={3} lg={3} className="my-2">
+        
+          <Card sm={4} lg={3}>
             <Card.Body>
-              <Card.Title>{props.dataStory.title}</Card.Title>
-              <Card.Text>{content.slice(0, 100)}</Card.Text>
+              <div className="cardBodyStory">
+                <Card.Title>{props.dataStory.title}</Card.Title>
+                <Card.Text>{content.slice(0, 100)}</Card.Text>
+              </div>
             </Card.Body>
-            <Card.Footer>
-              <Button
-                variant="dark"
-                onClick={() => history.push(`/story/${props.dataStory.id}`)}
-                className="mx-3"
-              >
-                Read More...
-              </Button>
-            </Card.Footer>
+            <div className="cardFooter">
+              <Card.Footer>
+                <button onClick={() => history.push(`/story/${props.dataStory.id}`)} className="buttonReadMore button">
+                  Read More...
+                </button>
+              </Card.Footer>
+            </div>
           </Card>
         </Col>
       </Row>
