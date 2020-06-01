@@ -89,10 +89,16 @@ export default () => {
           </Card.Body>
 
           <Card.Footer>
-            <small className="textMutedCreatedBy">{storyDetail.createdBy}</small>
-            <button variant="dark" onClick={() => _init()} className="buttonPlay button">
-              Play
-            </button>
+            <div className="cardFooter">
+                <small className="textMutedCreatedBy">{storyDetail.createdBy}</small>
+                <button variant="dark" onClick={() => _init()} className="buttonPlay button">
+                  Play
+                </button>
+                <div className="exportToPdfLogo">
+                  <i className="fas fa-file-pdf"></i>
+                </div>
+            </div>
+
           </Card.Footer>
           
         </Card>

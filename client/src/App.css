@@ -246,7 +246,7 @@
   outline: 0;
 }
 
-.buttonReadMore, .buttonPlay{
+.buttonReadMore{
   width: 150px;
   height: 35px;
   border-radius: 10px;
@@ -255,14 +255,21 @@
   background-color: rgba(0, 0, 0, 0.2); 
 }
 
-.cardFooter{
-  background-color: rgba(0, 0, 0, 0.2);
+.buttonPlay{
+  width: 150px;
+  height: 30px;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 5px;
+  background-color: rgba(0, 0, 0, 0.2); 
+  margin: 0px 10px;
 }
 
 .textMutedCreatedBy{
+  text-align: center;
+  line-height: 25px;
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 20px;
-  margin-right: 10px;
 }
 
 .imageHome{
@@ -311,18 +318,32 @@
 
 .cardBodyStory{
   width: 700px;
-  /* border: solid rgba(0, 0, 0, 0.2); */
 }
+
 .logoListStory{
   position: fixed;
   top: 250px;
   left: 800px;
   overflow-x: hidden;
 }
+
 .listStory{
   position: absolute;
   top: 150px;
   left: 100px;
+}
+
+.exportToPdfLogo{
+  font-size: 30px;
+  text-align: center;
+  line-height: 5px;
+}
+
+.cardFooter{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 5px 0px;
 }
 
 

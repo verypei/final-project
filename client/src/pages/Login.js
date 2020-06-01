@@ -5,7 +5,7 @@ export default () => {
     <>
     <div className="login">
        <img className="imageLogin" alt="" src={logo1}></img>
-       <input type="text" className="inputLogin input"></input>
+       <input type="text" className="inputLogin input" placeholder="username"></input>
        <button className="buttonLogin button">start</button>
     </div>
     </>
