@@ -8,6 +8,7 @@ export default function Room() {
     const [roomTheme, setRoomTheme] = useState('');
 
     const [currentRoom, setCurrentRoom] = useState(null);
+    const [currentRound, setCurrentRound] = useState(null);
 
     useEffect(() => {
         socket.emit('get rooms');
@@ -28,6 +29,9 @@ export default function Room() {
         socket.on('update room data', (room) => {
             setCurrentRoom(room);
         });
+        socket.on('update round', (round) => {
+            setCurrentRound(round);
+        })
     }, []);
 
     function createRoom() {
@@ -54,11 +58,22 @@ export default function Room() {
                             )
                         })}
                     </ul>
+                    {renderRoundData()}
                     <button onClick={leaveRoom}>Leave room</button>
                 </div>
             )
         } else {
             return <h2>Not joined a room</h2>
+        }
+    }
+
+    function renderRoundData() {
+        if(currentRound) {
+            return (
+                <>
+                    <div>Countdown: {currentRound.countdown}</div>
+                </>
+            )
         }
     }
 

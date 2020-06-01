@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
             if(socket.joinedRoom) {
                 let thisUserInRoom = socket.joinedRoom.users.find(user => user.id === socket.id);
                 thisUserInRoom.name = socket.userName;
-                io.to(`room-${socket.joinedRoom.id}`).emit('update room data', socket.joinedRoom);
+                io.to(`room-${socket.joinedRoom.id}`).emit('update room data', getViewableRoomData(socket.joinedRoom, true));
             }
         }
     });
@@ -105,7 +105,15 @@ function createRoom(roomName, roomTheme, roomMasterId) {
         timeLimit: roundConfiguration.timeLimit,
         timeLimitPerUser: roundConfiguration.timeLimitPerUser,
         roomMasterId,
-        users: []
+        users: [],
+        roundTimerId: null,
+        round: {
+            countdown: -1,
+            globalCountdown: roundConfiguration.timeLimit,
+            allText: '',
+            currentText: '',
+            currentUserId: ''
+        }
     };
     rooms.push(roomData);
     return roomData;
@@ -133,8 +141,9 @@ function joinRoom(socket, room) {
             id: socket.id,
             name: socket.userName
         })
-        io.to(`room-${socket.joinedRoom.id}`).emit('update room data', socket.joinedRoom);
+        io.to(`room-${socket.joinedRoom.id}`).emit('update room data', getViewableRoomData(socket.joinedRoom, true));
         io.emit('get rooms', getRoomsData());
+        updateRound(room);
     }
 }
 
@@ -153,12 +162,13 @@ function leaveRoom(socket) {
         console.log('roomid'+ joinedRoom.id);
         checkRoomEmpty(joinedRoom);
         updateRoomMaster(joinedRoom);
-        io.to(`room-${joinedRoom.id}`).emit('update room data', joinedRoom);
+        io.to(`room-${joinedRoom.id}`).emit('update room data', getViewableRoomData(joinedRoom, true));
         socket.emit('leave room', {
             success: true,
             message: 'leave room success'
         });
         io.emit('get rooms', getRoomsData());
+        updateRound(joinedRoom);
     }
 }
 
@@ -167,12 +177,37 @@ function getRoomById(roomId) {
 }
 
 function updateRoomMaster(room) {
-    console.log(room);
     if(room.users.length) {
         if(!room.users.some(user => user.id === room.roomMasterId)) {
             room.roomMasterId = room.users[0].id;
         }
     }
+}
+
+function updateRound(room) {
+    if(room) {
+        if(room.status === 'waiting') {
+            if(room.users.length >= room.minUser) {
+                room.round.countdown = 30;
+                if(!room.roundTimerId) {
+                    room.roundTimerId = setInterval((room) => (updateCountdown(room)), 1000, room);
+                }
+            } else {
+                clearInterval(room.roundTimerId);
+                room.roundTimerId = null;
+                room.round.countdown = -1;
+            }
+        }
+        io.to(`room-${room.id}`).emit('update round', room.round);
+    }
+}
+
+function updateCountdown(room) {
+    room.round.countdown--;
+    if(room.round.countdown <= 0) {
+        clearInterval(room.roundTimerId);
+    }
+    io.to(`room-${room.id}`).emit('update round', room.round);
 }
 
 // function userAlreadyInRoom(socket, room) {
@@ -203,30 +238,38 @@ function getLastRoomId() {
 }
 
 function getRoomsData() {
-    return rooms.map(room => {
-        const {
-            id,
-            name,
-            status,
-            minUser,
-            maxUser,
-            timeLimit,
-            timeLimitPerUser,
-            roomMasterId,
-            users
-        } = room;
-        return {
-            id,
-            name,
-            status,
-            minUser,
-            maxUser,
-            timeLimit,
-            timeLimitPerUser,
-            roomMasterId,
-            usersCount: users.length
-        }
-    });
+    return rooms.map(room => getViewableRoomData(room));
+}
+
+function getViewableRoomData(room, showPlayers = false) {
+    const {
+        id,
+        name,
+        theme,
+        status,
+        minUser,
+        maxUser,
+        timeLimit,
+        timeLimitPerUser,
+        roomMasterId,
+        users
+    } = room;
+    let viewableRoomData = {
+        id,
+        name,
+        theme,
+        status,
+        minUser,
+        maxUser,
+        timeLimit,
+        timeLimitPerUser,
+        roomMasterId,
+        usersCount: users.length
+    }
+    if(showPlayers) {
+        viewableRoomData.users = users;
+    }
+    return viewableRoomData;
 }
 
 http.listen(port, () => console.log(`Server listening on port ${port}`));
