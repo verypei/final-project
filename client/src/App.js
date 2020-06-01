@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { Home, Login, Detail, ListStory, Room } from "./pages";
+import { Home, Login, Detail, ListStory, Room, VoiceToText } from "./pages";
 import Navbar from "./components/Navbar";
 import store from "./store";
 import { Provider } from "react-redux";
@@ -25,6 +25,9 @@ function App() {
             </Route>
             <Route path="/room">
               <Room />
+            </Route>
+            <Route path="/voice">
+              <VoiceToText />
             </Route>
             <Route exact path="/">
               <Home />
