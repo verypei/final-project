@@ -21,7 +21,7 @@ class storiesController{
             theme:req.body.theme,
             createdBy:req.body.createdBy
         }
-            
+        // console.log(obj,"======================")
         stories.create(obj)
         .then(data=>{
             res.status(201).json(data);

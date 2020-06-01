@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { CardDeck, Card, Button } from "react-bootstrap";
+import { CardDeck, Card} from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getStoryDetail } from "../store/actions/storiesAction";
 import Speech from "speak-tts";
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
-import image from '../assets/pinpng.com-pdf-icon-png-200230.png'
+
 
 export default () => {
   const { id } = useParams();
   const { storyDetail, loading } = useSelector((state) => state.stories);
-  //   console.log(storyDetail, loading);
+    console.log(storyDetail, loading);
 
   const speech = new Speech(); // will throw an exception if not browser supported
   if (speech.hasBrowserSupport()) {
@@ -99,15 +99,20 @@ export default () => {
             <Card.Title>{storyDetail.title}</Card.Title>
             <Card.Text>{storyDetail.content}</Card.Text>
           </Card.Body>
+
           <Card.Footer>
-            <small className="text-muted">{storyDetail.createdBy}</small>
-            <Button onClick={() => _init()} className="mx-3"style={{backgroundColor: 'transparent', color: '#649D66', borderColor:'#649D66'}}>
-              Play
-            </Button>
-            <Button style={{backgroundColor: 'transparent', color: '#649D66', borderColor:'transparent', width: '10%'}} onClick={exportDocument}>
-              <img src={image} width='100%'/>
-            </Button>
+            <div className="cardFooter">
+                <small className="textMutedCreatedBy">{storyDetail.createdBy}</small>
+                <button variant="dark" onClick={() => _init()} className="buttonPlay button">
+                  Play
+                </button>
+                <div className="exportToPdfLogo" onClick={exportDocument}>
+                  <i className="fas fa-file-pdf"></i>
+                </div>
+            </div>
+
           </Card.Footer>
+          
         </Card>
       </CardDeck>
     </>

@@ -1,36 +1,37 @@
 import React from "react";
-import { Container, Col, Row } from 'react-bootstrap'
 
 export default () => {
+  return (
+    <>
+    
+      <div className="imageBackground"></div>
+          <div className="timerFiveMinutes">
+            <p>05:00</p>
+          </div>
 
-    return (
-      <Container style={{marginTop:'2%'}}>
-        <Row>
-          <Col md='4' style={{color: '#649D66'}}>
-            <h1> Title </h1>
-            <h6> Player:  </h6><br/>
-          </Col>
-          <Col md='4'>
-          </Col>
-          <Col md='4'>
-            Timer 5 menit
-          </Col>
-        </Row>
-        <Row>
-          <Col md='6'>
-          </Col>
-          <Col md='6'>
-            Timer 30 detik
-          </Col>
-        </Row>
-          <Row>
-            <Col md='6'>
-              cerita
-            </Col>
-            <Col md='6'>
-              <textarea rows='15' cols='60' style={{borderColor:'#649D66'}}/>
-            </Col>
-          </Row>
-      </Container>
-    );
+          <div>
+            <textarea type="text" className="inputStoryBox input" placeholder="input your story in 30 second"></textarea>
+          </div>
+
+          <div>
+            <p className="timer30Second">30</p>
+          </div>
+
+          <div className="story">
+            <h1 className="titleOutputStory"> your story</h1>
+            <p className="outputStory">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer 
+            took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, 
+            but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s 
+            with the release of Letraset sheets containing Lorem Ipsum passages, 
+            and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          </div>
+
+          {/* <div>
+            <button className="submitTextButton button">submit</button>
+          </div> */}
+    
+
+    </>
+  );
 };

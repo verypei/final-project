@@ -1,19 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Nav } from "react-bootstrap";
-import image from '../assets/31052020063111A.png'
+import { Navbar, Nav } from "react-bootstrap"
 
 export default function NavBar() {
   return (
-    <Navbar bg="light" variant="light">
-      <Navbar.Brand style={{width: '5%', height:'5%'}}>
-        <Link to="/home"><img src={image} width='100%'/></Link>
-      </Navbar.Brand>
+    <Navbar className="navbar">
+      {
+        localStorage.getItem('username')?
+        (
+          <Nav className="mr-auto">
+            <Link to="/">
+              <p className="navbarLink">login</p>
+            </Link>
+          </Nav>
+        ) : 
+        (
+          <Nav className="mr-auto">
+            <Link to="/">
+              <p className="navbarLink">login</p>
+            </Link>
+          </Nav>
+        )
+      }
       <Nav className="mr-auto">
-        <Link to="/story" className="mx-3" style={{color: '#649D66'}}>
-          List Story
+        <Link to="/story" className="mx-3">
+          <p className="navbarLink">stories</p>
         </Link>
       </Nav>
+
     </Navbar>
   );
 }

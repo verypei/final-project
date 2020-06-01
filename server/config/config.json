@@ -1,7 +1,11 @@
 {
   "development": {
     "username": "postgres",
+<<<<<<< HEAD
     "password": "20012020",
+=======
+    "password": "freexp",
+>>>>>>> c2bd106e092880dbb6e47e58792bf283f7f96803
     "database": "Stories",
     "host": "127.0.0.1",
     "dialect": "postgres"
