@@ -2,6 +2,8 @@ const http = require('./app');
 const port = process.env.PORT || 3001;
 const io = require('socket.io')(http);
 
+const { stories } = require('./models');
+
 const roomConfiguration = {
     maxUser: 4,
     minUser: 2
@@ -222,7 +224,7 @@ function updateCountdown(room) {
     if(room.status === 'playing') {
         room.round.globalCountdown--;
         if(room.users.length <= room.round.currentUserIndex) {
-            room.round.countdown = 30;
+            room.round.countdown = room.timeLimitPerUser;
             room.round.currentUserIndex = 0;
         }
     }
@@ -232,20 +234,21 @@ function updateCountdown(room) {
             room.round.currentUserIndex = 0;
             room.round.countdown = roundConfiguration.timeLimitPerUser;
         } else if(room.status === 'playing') {
+            if(room.round.currentText.trim().length) {
+                room.round.allText += `${room.round.currentText}\n`;
+            }
+            room.round.currentText = '';
             if(room.round.globalCountdown <= 0) {
                 room.status = 'finished';
                 clearInterval(room.roundTimerId);
+                saveRoomStory(room);
             } else {
-                if(room.round.currentText.trim().length) {
-                    room.round.allText += `${room.round.currentText}\n`;
-                }
-                room.round.currentText = '';
                 let newUserIndex = room.round.currentUserIndex + 1;
                 if(room.users.length <= newUserIndex) {
                     newUserIndex = 0;
                 }
                 room.round.currentUserIndex = newUserIndex;
-                room.round.countdown = 30;
+                room.round.countdown = room.timeLimitPerUser;
             }
         }
     }
@@ -256,6 +259,19 @@ function updateCountdown(room) {
 // function userAlreadyInRoom(socket, room) {
 //     return room.users.some(roomUser => socket.id === roomUser.id);
 // }
+
+function saveRoomStory(room) {
+    let obj = {
+        title: room.name,
+        content: room.round.allText,
+        theme: room.theme,
+        createdBy: room.users.map(user => user.name).join(', ')
+    }
+    stories.create(obj)
+    .catch(err => {
+        console.error(err);
+    });
+}
 
 function checkRoomEmpty(room) {
     if(!room.users.length) {
