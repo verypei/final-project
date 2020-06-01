@@ -9,7 +9,8 @@ const roomConfiguration = {
 
 const roundConfiguration = {
     timeLimit: 5 * 60,
-    timeLimitPerUser: 30
+    timeLimitPerUser: 30,
+    timeToStart: 30
 };
 
 const rooms = [];
@@ -84,14 +85,28 @@ io.on('connection', (socket) => {
                 success: false,
                 message: "room doesn't exist"
             });
+        } else if(roomToJoin.status !== 'waiting') {
+            socket.emit('join room', {
+                success: false,
+                message: 'the room has already started'
+            });
         } else {
             joinRoom(socket, roomToJoin);
         }
     });
 
+    socket.on('input story', (text) => {
+        if(socket.joinedRoom) {
+            if(socket.joinedRoom.status === 'playing' && socket.joinedRoom.users[socket.joinedRoom.round.currentUserIndex].id === socket.id) {
+                socket.joinedRoom.round.currentText = text;
+                io.to(`room-${socket.joinedRoom.id}`).emit('update round', socket.joinedRoom.round);
+            }
+        }
+    });
+
     socket.on('leave room', () => {
         leaveRoom(socket);
-    })
+    });
 });
 
 function createRoom(roomName, roomTheme, roomMasterId) {
@@ -112,7 +127,7 @@ function createRoom(roomName, roomTheme, roomMasterId) {
             globalCountdown: roundConfiguration.timeLimit,
             allText: '',
             currentText: '',
-            currentUserId: ''
+            currentUserIndex: 0
         }
     };
     rooms.push(roomData);
@@ -188,8 +203,8 @@ function updateRound(room) {
     if(room) {
         if(room.status === 'waiting') {
             if(room.users.length >= room.minUser) {
-                room.round.countdown = 30;
                 if(!room.roundTimerId) {
+                    room.round.countdown = roundConfiguration.timeToStart;
                     room.roundTimerId = setInterval((room) => (updateCountdown(room)), 1000, room);
                 }
             } else {
@@ -204,9 +219,37 @@ function updateRound(room) {
 
 function updateCountdown(room) {
     room.round.countdown--;
-    if(room.round.countdown <= 0) {
-        clearInterval(room.roundTimerId);
+    if(room.status === 'playing') {
+        room.round.globalCountdown--;
+        if(room.users.length <= room.round.currentUserIndex) {
+            room.round.countdown = 30;
+            room.round.currentUserIndex = 0;
+        }
     }
+    if(room.round.countdown <= 0) {
+        if(room.status === 'waiting') {
+            room.status = 'playing';
+            room.round.currentUserIndex = 0;
+            room.round.countdown = roundConfiguration.timeLimitPerUser;
+        } else if(room.status === 'playing') {
+            if(room.round.globalCountdown <= 0) {
+                room.status = 'finished';
+                clearInterval(room.roundTimerId);
+            } else {
+                if(room.round.currentText.trim().length) {
+                    room.round.allText += `${room.round.currentText}\n`;
+                }
+                room.round.currentText = '';
+                let newUserIndex = room.round.currentUserIndex + 1;
+                if(room.users.length <= newUserIndex) {
+                    newUserIndex = 0;
+                }
+                room.round.currentUserIndex = newUserIndex;
+                room.round.countdown = 30;
+            }
+        }
+    }
+    io.to(`room-${room.id}`).emit('update room data', getViewableRoomData(room, true));
     io.to(`room-${room.id}`).emit('update round', room.round);
 }
 
@@ -221,6 +264,7 @@ function checkRoomEmpty(room) {
 }
 
 function deleteRoom(roomToDelete) {
+    clearInterval(roomToDelete.roundTimerId);
     rooms.splice(rooms.findIndex(room => roomToDelete.id === room.id), 1);
     io.emit('delete room', {
         id: roomToDelete.id,

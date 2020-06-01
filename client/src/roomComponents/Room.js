@@ -10,6 +10,8 @@ export default function Room() {
     const [currentRoom, setCurrentRoom] = useState(null);
     const [currentRound, setCurrentRound] = useState(null);
 
+    const [currentStoryText, setCurrentStoryText] = useState('');
+
     useEffect(() => {
         socket.emit('get rooms');
         socket.on('get rooms', (roomsFromServer) => {
@@ -31,7 +33,7 @@ export default function Room() {
         });
         socket.on('update round', (round) => {
             setCurrentRound(round);
-        })
+        });
     }, []);
 
     function createRoom() {
@@ -44,6 +46,13 @@ export default function Room() {
 
     function leaveRoom() {
         socket.emit('leave room');
+    }
+
+    function inputCurrentStoryText(event) {
+        if(isCurrentUserTurn()) {
+            setCurrentStoryText(event.target.value);
+            socket.emit('input story', event.target.value);
+        }
     }
 
     function renderJoinedRoom() {
@@ -68,13 +77,43 @@ export default function Room() {
     }
 
     function renderRoundData() {
-        if(currentRound) {
+        if (currentRound) {
             return (
                 <>
                     <div>Countdown: {currentRound.countdown}</div>
+                    <div>Global Countdown: {currentRound.globalCountdown}</div>
+                    {renderStory()}
                 </>
             )
         }
+    }
+
+    function renderStory() {
+        if (currentRound && currentRoom && currentRoom.status === 'playing') {
+            return (
+                <div>
+                    <div>All Text</div>
+                    <textarea value={`${currentRound.allText}${currentRound.currentText}`} readOnly={true} />
+                    <div>current input</div>
+                    <textarea value={currentStoryText} onChange={inputCurrentStoryText} readOnly={!isCurrentUserTurn()} />
+                    <div>current turn: {currentRoom.users[currentRound.currentUserIndex].name}</div>
+                </div>
+            )
+        } else if (currentRoom.status === 'finished') {
+            return (
+                <h3>Finished</h3>
+            )
+        }
+    }
+
+    function isCurrentUserTurn() {
+        if (currentRound && currentRoom &&
+            currentRoom.status === 'playing' &&
+            currentRound.currentUserIndex < currentRoom.users.length &&
+            currentRoom.users[currentRound.currentUserIndex].id === socket.id) {
+            return true;
+        }
+        return false;
     }
 
     return (
