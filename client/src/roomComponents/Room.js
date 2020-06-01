@@ -115,7 +115,11 @@ export default function Room() {
             )
         } else if (currentRoom.status === 'finished') {
             return (
-                <h3>Finished</h3>
+                <div>
+                    <h3>Finished</h3>
+                    <div>All Text</div>
+                    <textarea value={`${currentRound.allText}`} readOnly={true} />
+                </div>
             )
         }
     }
