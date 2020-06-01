@@ -12,6 +12,8 @@ export default function Room() {
 
     const [currentStoryText, setCurrentStoryText] = useState('');
 
+    const [isCurrentUserTurn, setIsCurrentUserTurn] = useState(false);
+
     useEffect(() => {
         socket.emit('get rooms');
         socket.on('get rooms', (roomsFromServer) => {
@@ -36,6 +38,18 @@ export default function Room() {
         });
     }, []);
 
+    useEffect(() => {
+        if (currentRound && currentRoom &&
+            currentRoom.status === 'playing' &&
+            currentRound.currentUserIndex < currentRoom.users.length &&
+            currentRoom.users[currentRound.currentUserIndex].id === socket.id) {
+            setIsCurrentUserTurn(true);
+        } else {
+            setIsCurrentUserTurn(false);
+            setCurrentStoryText('');
+        }
+    }, [currentRoom, currentRound]);
+
     function createRoom() {
         socket.emit('create room', roomName, roomTheme);
     }
@@ -49,7 +63,7 @@ export default function Room() {
     }
 
     function inputCurrentStoryText(event) {
-        if(isCurrentUserTurn()) {
+        if(isCurrentUserTurn) {
             setCurrentStoryText(event.target.value);
             socket.emit('input story', event.target.value);
         }
@@ -95,7 +109,7 @@ export default function Room() {
                     <div>All Text</div>
                     <textarea value={`${currentRound.allText}${currentRound.currentText}`} readOnly={true} />
                     <div>current input</div>
-                    <textarea value={currentStoryText} onChange={inputCurrentStoryText} readOnly={!isCurrentUserTurn()} />
+                    <textarea value={currentStoryText} onChange={inputCurrentStoryText} readOnly={!isCurrentUserTurn} />
                     <div>current turn: {currentRoom.users[currentRound.currentUserIndex].name}</div>
                 </div>
             )
@@ -104,16 +118,6 @@ export default function Room() {
                 <h3>Finished</h3>
             )
         }
-    }
-
-    function isCurrentUserTurn() {
-        if (currentRound && currentRoom &&
-            currentRoom.status === 'playing' &&
-            currentRound.currentUserIndex < currentRoom.users.length &&
-            currentRoom.users[currentRound.currentUserIndex].id === socket.id) {
-            return true;
-        }
-        return false;
     }
 
     return (
