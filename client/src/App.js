@@ -11,8 +11,8 @@ function App() {
       <Router>
         <Navbar></Navbar>
         <Switch>
-          <Route path="/login">
-            <Login />
+          <Route path="/home">
+            <Home />
           </Route>
           <Route path="/story/:id">
             <Detail />
@@ -24,7 +24,7 @@ function App() {
             <Room />
           </Route>
           <Route exact path="/">
-            <Home />
+            <Login />
           </Route>
         </Switch>
       </Router>
