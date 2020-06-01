@@ -53,19 +53,20 @@ io.on('connection', (socket) => {
         socket.emit('get rooms', getRoomsData());
     });
 
-    socket.on('create room', (name) => {
+    socket.on('create room', (name, theme) => {
         let result = {
             success: false,
             message: ''
         };
         let createdRoom = null;
         if(socket.joinedRoom) {            
-            result.success = false;
             result.message = 'you have already joined a room, please leave the room first';
         } else if(!name) {
             result.message = 'room name must be filled';
+        } else if (!theme) {
+            result.message = 'theme must be selected';
         } else {
-            createdRoom = createRoom(name, socket.id);
+            createdRoom = createRoom(name, theme, socket.id);
             result.success = true;
             result.message = 'created room successfully';
         }
@@ -93,10 +94,11 @@ io.on('connection', (socket) => {
     })
 });
 
-function createRoom(roomName, roomMasterId) {
+function createRoom(roomName, roomTheme, roomMasterId) {
     let roomData = {
         id: getLastRoomId() + 1,
         name: roomName,
+        theme: roomTheme,
         status: 'waiting',
         minUser: roomConfiguration.minUser,
         maxUser: roomConfiguration.maxUser,

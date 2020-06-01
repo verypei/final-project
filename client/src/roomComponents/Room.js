@@ -5,6 +5,7 @@ export default function Room() {
     const [rooms, setRooms] = useState([]);
 
     const [roomName, setRoomName] = useState('');
+    const [roomTheme, setRoomTheme] = useState('');
 
     const [currentRoom, setCurrentRoom] = useState(null);
 
@@ -30,7 +31,7 @@ export default function Room() {
     }, []);
 
     function createRoom() {
-        socket.emit('create room', roomName);
+        socket.emit('create room', roomName, roomTheme);
     }
 
     function joinRoom(roomId) {
@@ -64,7 +65,8 @@ export default function Room() {
     return (
         <div>
             <h1>Create Room</h1>
-            <input type="text" onChange={e => setRoomName(e.target.value)} value={roomName} />
+            <input type="text" placeholder="name" onChange={e => setRoomName(e.target.value)} value={roomName} />
+            <input type="text" placeholder="theme" onChange={e => setRoomTheme(e.target.value)} value={roomTheme} />
             <button onClick={createRoom}>Create Room</button>
             <h1>Room List</h1>
             <ul>
