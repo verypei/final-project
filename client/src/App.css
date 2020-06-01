@@ -36,3 +36,153 @@
     transform: rotate(360deg);
   }
 }
+
+.home{
+  width: 700px;
+  height: 550px;
+  background-image: url("./asset/28-284600_mouth-talking-clipart-19-talking-mouth-graphic-library-removebg-preview.png");
+  background-repeat: no-repeat;
+  position: absolute;
+  left:200px;
+  top: 90px;
+  background-size: cover;
+}
+.homeTitle{
+  width: 100px;
+  height: 400px;
+  position: relative;
+  left: 700px;
+  top: 200px;
+  font-family: cursive;
+  font-weight: bolder;
+  color: #282c34;
+  text-align: left;
+  font-size: 33px;
+  text-shadow: 0px,0px,20px,greenyellow;
+}
+.inputBox{
+  width: 200px;
+  height: 35px;
+  position: absolute;
+  left: 700px;
+  top: 75px;
+  border-radius: 10px;
+  outline: none;
+}
+.buttonStart{
+  width: 75px;
+  height: 35px;
+  border-radius: 10px;
+  font-family: cursive;
+  font-weight: bolder;
+  position: absolute;
+  left: 700px;
+  top: 130px;
+  color: black;
+  background-color: greenyellow;
+}
+.buttonStart:focus{
+  outline: 0;
+}
+
+.imageNavbar{
+  background-image: url("./asset/logo-removebg-preview.png");
+  width: 170px;
+  height: 60px;
+  position: relative;
+  margin-top: 0px;
+  background-size: cover;
+  border-radius: 35px;
+  border-color: black;
+}
+.mx-2{
+  position: absolute;
+  left: 1300px;
+  top: 25px;
+  text-align: center;
+  line-height: 40px;
+  color:black;
+  font-family: cursive;
+  font-weight: bolder;
+  font-size: 25px;
+}
+.mx-3{
+  position: absolute;
+  left: 1400px;
+  top: 25px;
+  text-align: center;
+  line-height: 40px;
+  color: black;
+  font-family: cursive;
+  font-weight: bolder;
+  font-size: 25px;
+}
+.navbar{
+  background-color: rgba(0, 255,0, 0.7);
+}
+.card{
+  background-image: url("./asset/computer-icons-nuvola-online-chat-chat-room-clip-art-png-favpng-HQb0bbKpXt7iGfZSm8XT6Ggzm-removebg-preview.png");
+  width: 800px;
+  height: 700px;
+  border: none;
+  outline: none;
+  background-repeat: no-repeat;
+  position: absolute;
+  left:0px;
+  left: 800px;
+  background-size: cover;
+}
+.buttonCreateRoom{
+  position: absolute;
+  left: 50px;
+  top: 150px;
+}
+
+.roomExist{
+  width: 200px;
+  height: 100px;
+  border-radius: 10px;
+  background-color: rgba(50, 250,0, 0.7);
+  position: absolute;
+  left: 30px;
+  top: 250px;
+}
+.createRoomButton{
+  width: 250px;
+  height: 50px;
+  position: absolute;
+  left: 10px;
+  top: 110px;
+  font-size: 25px;
+  font-family: cursive;
+  font-weight: bolder;
+  color: green;
+}
+.roomTitle{
+  font-size: 25px;
+  font-family: cursive;
+  font-weight: bolder;
+  color: black;
+}
+.iconJoinButton{
+  position: relative;
+  top: 10px;
+
+}
+.welcomeWord{
+  font-family: cursive;
+  font-size: 25px;
+  font-weight: bolder;
+  color: black;
+  position: absolute;
+  left: 600px;
+  top: 120px;
+}
+.horizontalLine{
+  background-color: rgba(0, 255,0, 0.7);
+  position: absolute;
+  left: 0px;
+  top: 190px;
+  width: 800px;
+  height: 7px;
+}

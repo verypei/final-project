@@ -1,8 +1,10 @@
 import React from "react";
+import Card from "../components/cardRoom";
+
 export default () => {
   return (
     <>
-      <h1>Ini Room</h1>
+      <Card></Card>
     </>
   );
 };
