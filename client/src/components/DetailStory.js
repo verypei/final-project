@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { CardDeck, Card, Button } from "react-bootstrap";
+import { CardDeck, Card,Button} from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getStoryDetail } from "../store/actions/storiesAction";
 import Speech from "speak-tts";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import Typography from "@material-ui/core/Typography";
 
 export default () => {
   const { id } = useParams();
@@ -100,22 +102,23 @@ export default () => {
       <CardDeck>
         <Card>
           <Card.Body id="export">
-            <Card.Title>{storyDetail.title}</Card.Title>
-            <Card.Text>{storyDetail.content}</Card.Text>
+            <Card.Title className="titleStory">{storyDetail.title}</Card.Title>
+            <Card.Text className="titleStory">{storyDetail.content}</Card.Text>
           </Card.Body>
 
           <Card.Footer>
             <small className="text-muted">{storyDetail.createdBy}</small>
-            <Button variant="dark" onClick={() => _init()} className="mx-3">
-              Play
-            </Button>
-            <Button
-              variant="dark"
-              onClick={() => speech.cancel()}
-              className="mx-3"
-            >
-              Stop
-            </Button>
+            
+              <Button class="mx-3" style={{marginLeft:"10px"}} onClick={() => _init()}>
+                Play
+              </Button>
+            
+              <Button class="mx-3" style={{marginLeft:"10px"}}
+                onClick={() => speech.cancel()}>
+                Stop
+              </Button>
+
+              <PictureAsPdfIcon className="exportToPdfLogo" onClick={exportDocument}></PictureAsPdfIcon>
           </Card.Footer>
         </Card>
       </CardDeck>

@@ -6,7 +6,7 @@ export default () => {
   return (
     <>
       
-      <h1>Detail story </h1>
+      <h1 className="titleListStory">Detail story </h1>
       <Container className="d-flex justify-content-md-center my-2">
         <DetailStory />
       </Container>

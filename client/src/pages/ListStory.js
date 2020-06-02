@@ -22,7 +22,7 @@ export default () => {
     <>
     <Container>
       <h1 className="titleListStory">List Story</h1>
-      <Container className="d-flex justify-content-md-center my-2">
+      <Container className="d-flex justify-content-md-center my-2" >
         <div className="listStory">
           <CardDeck>
             {story.map((data, index) => {

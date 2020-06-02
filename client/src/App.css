@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-image: linear-gradient(silver,white);
+  background-image: linear-gradient(rgba(150, 150, 150,0.5),white);
 }
 
 .App-logo {
@@ -42,6 +42,7 @@
   background-color: rgba(0, 0, 0, 0.2);
   height: 5%;
 }
+
 .imageLogin{
   width: 60%;
   height: 90%;
@@ -65,7 +66,7 @@
 
 .inputLogin{
   position:relative;
-  left: 29%;
+  left: 26.7%;
   top: 100px;
   width: 200px;
   height: 35px;
@@ -147,6 +148,10 @@
   text-align: left;
 }
 
+.titleStory{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
 .createRoomButton{
   width: 200px;
   height: 35px;
@@ -162,7 +167,6 @@
 
 .roomAvailable{
   width: 300px;
-  /* height: 100px; */
   background-color: grey;
   position: relative;
   left: 100px;
@@ -313,7 +317,7 @@
 .titleListStory{
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 35px;
-  font-weight: bolder;
+  /* font-weight: bolder; */
 }
 
 .cardBodyStory{
@@ -334,17 +338,25 @@
 }
 
 .exportToPdfLogo{
-  font-size: 30px;
-  text-align: center;
-  line-height: 5px;
+  color: rgb(9, 103, 181);
+  margin-left: 10px;
 }
 
+.text-muted{
+  font-size: 18px;
+}
 .cardFooter{
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding: 5px 0px;
+  margin-bottom: 10px;
 }
+
+.card-Row{
+  background-image: linear-gradient(rgba(150, 150, 150,0.5),white);
+  margin-bottom: 10px;
+}  
+
 
 
 
