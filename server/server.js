@@ -10,8 +10,8 @@ const roomConfiguration = {
 };
 
 const roundConfiguration = {
-  timeLimit: 5 * 60,
-  timeLimitPerUser: 30,
+  timeLimit: 1 * 30,
+  timeLimitPerUser: 10,
   timeToStart: 5,
 };
 

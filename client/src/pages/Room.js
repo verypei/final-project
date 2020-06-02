@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import socket from "../socket";
 import { useSpeechRecognition } from "react-speech-kit";
 import { useHistory } from "react-router-dom";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import MicIcon from "@material-ui/icons/Mic";
+import MicOffIcon from "@material-ui/icons/MicOff";
+import swal from "sweetalert";
 
 export default () => {
   const history = useHistory();
 
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result) => {
-      console.log(isCurrentUserTurn);
       if (isCurrentUserTurn) {
         setCurrentStoryText(result);
         socket.emit("input story", result);
@@ -61,9 +63,13 @@ export default () => {
 
   useEffect(() => {
     if (currentRoom && currentRoom.status === "finished") {
-      history.push("/story");
+      swal({
+        icon: "warning",
+        text: "Time is up!!",
+      });
+      //history.push("/story");
     }
-  }, [currentRoom, history]);
+  }, [currentRoom]);
 
   function startListening() {
     if (isCurrentUserTurn) {
@@ -93,51 +99,53 @@ export default () => {
       return (
         <Container>
           <div>
-            <h2>Global Countdown: {currentRound.globalCountdown}</h2>
+            <h2>Global Countdown : {currentRound.globalCountdown}</h2>
+            <h3>
+              {" "}
+              current turn :{" "}
+              {currentRoom.users[currentRound.currentUserIndex].name}
+            </h3>
+            <h4>Your time : {currentRound.countdown}</h4>
           </div>
           <Row>
             <Col>
               {" "}
               <Form.Group controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Your Story</Form.Label>
-                <Form.Control as="textarea" rows="3" readOnly />
+                <Form.Control
+                  as="textarea"
+                  rows="10"
+                  readOnly
+                  value={`${currentRound.allText}${currentRound.currentText}`}
+                />
               </Form.Group>
             </Col>
             <Col>
               {" "}
               <Form.Group controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Current Input</Form.Label>
-                <Form.Control as="textarea" rows="3" />
+                <Form.Control
+                  as="textarea"
+                  rows="5"
+                  placeholder="input your story in 30 second"
+                  value={currentStoryText}
+                  onChange={inputCurrentStoryText}
+                  readOnly={!isCurrentUserTurn}
+                />
+                {!listening ? (
+                  <Button className="my-3" onClick={startListening}>
+                    {" "}
+                    <MicIcon style={{ fontSize: 20 }} />
+                  </Button>
+                ) : (
+                  <Button className="my-3" onClick={stop}>
+                    {" "}
+                    <MicOffIcon style={{ fontSize: 20 }} />
+                  </Button>
+                )}
               </Form.Group>
             </Col>
           </Row>
-
-          <div>
-            <textarea
-              type="text"
-              placeholder="input your story in 30 second"
-              value={currentStoryText}
-              onChange={inputCurrentStoryText}
-              readOnly={!isCurrentUserTurn}
-            ></textarea>
-            <button onClick={startListening}>Start</button>
-            <button onClick={stop}>Stop</button>
-            {listening && <div>Go ahead I'm listening</div>}
-          </div>
-
-          <div>
-            current turn:{" "}
-            {currentRoom.users[currentRound.currentUserIndex].name}
-          </div>
-
-          <div>
-            <p className="timer30Second">Countdown: {currentRound.countdown}</p>
-          </div>
-
-          <div className="story">
-            <h1> your story</h1>
-            <p>{`${currentRound.allText}${currentRound.currentText}`}</p>
-          </div>
         </Container>
       );
     }

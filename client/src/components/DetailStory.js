@@ -6,6 +6,8 @@ import { getStoryDetail } from "../store/actions/storiesAction";
 import Speech from "speak-tts";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import StopIcon from "@material-ui/icons/Stop";
 
 export default () => {
   const { id } = useParams();
@@ -106,15 +108,21 @@ export default () => {
 
           <Card.Footer>
             <small className="text-muted">{storyDetail.createdBy}</small>
-            <Button variant="dark" onClick={() => _init()} className="mx-3">
-              Play
+            <Button
+              className="py-1"
+              onClick={() => speech.cancel()}
+              style={{ float: "right" }}
+            >
+              {" "}
+              <StopIcon style={{ fontSize: 20 }} />
             </Button>
             <Button
-              variant="dark"
-              onClick={() => speech.cancel()}
-              className="mx-3"
+              onClick={() => _init()}
+              className="mx-3 py-1"
+              style={{ float: "right" }}
             >
-              Stop
+              {" "}
+              <PlayArrowIcon style={{ fontSize: 20 }} />
             </Button>
           </Card.Footer>
         </Card>

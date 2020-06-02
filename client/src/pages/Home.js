@@ -50,7 +50,7 @@ export default () => {
   return (
     <Container>
       <h1>Welcome {localStorage.getItem("username")}</h1>
-      <Button className="my-3" variant="success" onClick={handleShow}>
+      <Button className="my-3" variant="secondary" onClick={handleShow}>
         Create Room
       </Button>
 

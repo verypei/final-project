@@ -4,12 +4,11 @@ import DetailStory from "../components/DetailStory";
 
 export default () => {
   return (
-    <>
-      
-      <h1>Detail story </h1>
-      <Container className="d-flex justify-content-md-center my-2">
+    <Container>
+      <h3>Detail story </h3>
+      <Container>
         <DetailStory />
       </Container>
-    </>
+    </Container>
   );
 };
