@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "postgres",
-    "password": "q1w2e3r4t5",
+    "password": "postgres",
     "database": "Stories",
     "host": "127.0.0.1",
     "dialect": "postgres"
@@ -14,8 +14,12 @@
     "dialect": "postgres"
   },
   "production": {
+    "username": "root",
+    "password": null,
+    "database": "d992mcb5hvdfmu",
+    "host": "127.0.0.1",
     "dialect": "postgres",
-    "database": "stories",
+    "operatorsAliases": false,
     "use_env_variable": "DATABASE_URL"
   }
 }
