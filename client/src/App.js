@@ -1,7 +1,8 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+// import UserName from './roomComponents/UserName';
+// import Room from './roomComponents/Room';
 import { Home, Login, Detail, ListStory, Room } from "./pages";
 import Navbar from "./components/Navbar";
 import store from "./store";
@@ -33,6 +34,14 @@ function App() {
         </Router>
       </div>
     </Provider>
+
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <UserName />
+//       <Room />
+//     </div>
   );
 }
 

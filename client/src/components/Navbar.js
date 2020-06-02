@@ -9,8 +9,8 @@ export default function NavBar() {
         localStorage.getItem('username')?
         (
           <Nav className="mr-auto">
-            <Link to="/">
-              <p className="navbarLink">login</p>
+            <Link to="/home">
+              <p className="navbarLink">home</p>
             </Link>
           </Nav>
         ) : 

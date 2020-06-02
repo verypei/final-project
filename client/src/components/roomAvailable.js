@@ -1,13 +1,15 @@
 import React from "react";
 
-export default () => {
-  
+export default (props) => {
+  // console.log(props,"=====================")
+
   return (
     <>
-    
         <div className="roomAvailable">
-            <p className="titleRoomAvailable">title</p>
-            <button className="joinRoomButton button">join</button>
+            <p className="titleRoomAvailable">{props.name}</p>
+            <p>{props.theme}</p>
+            <p>{props.usersCount} / {props.maxUser}</p>
+            <button onClick={props.onClickJoin}>join</button>
         </div>
     </>
   );

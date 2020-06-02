@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import socket from "../socket";
 import { useSpeechRecognition } from "react-speech-kit";
-import { useHistory } from "react-router-dom";
 
-export default (props) => {
-  // console.log(props,"XXXXXXXXXXXXXXXXx")
-  const history = useHistory();
-
+export default function Room() {
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result) => {
       console.log(isCurrentUserTurn);
@@ -16,9 +12,12 @@ export default (props) => {
       }
     },
   });
+  const [rooms, setRooms] = useState([]);
+
+  const [roomName, setRoomName] = useState("");
+  const [roomTheme, setRoomTheme] = useState("");
 
   const [currentRoom, setCurrentRoom] = useState(null);
-
   const [currentRound, setCurrentRound] = useState(null);
 
   const [currentStoryText, setCurrentStoryText] = useState("");
@@ -26,7 +25,17 @@ export default (props) => {
   const [isCurrentUserTurn, setIsCurrentUserTurn] = useState(false);
 
   useEffect(() => {
-    
+    socket.emit("get rooms");
+    socket.on("get rooms", (roomsFromServer) => {
+      console.log(roomsFromServer);
+      setRooms(roomsFromServer);
+    });
+    socket.on("create room", (result) => {
+      console.log(result);
+    });
+    socket.on("join room", (result) => {
+      console.log(result);
+    });
     socket.on("leave room", (result) => {
       setCurrentRoom(null);
       console.log(result);
@@ -37,9 +46,7 @@ export default (props) => {
     socket.on("update round", (round) => {
       setCurrentRound(round);
     });
-
   }, []);
-
 
   useEffect(() => {
     if (
@@ -62,16 +69,18 @@ export default (props) => {
     }
   }, [listening, isCurrentUserTurn, stop]);
 
-  useEffect(()=>{
-    if(currentRoom && currentRoom.status==="finished"){
-        history.push("/story")
-    }
-  },[currentRoom,history])
-
   function startListening() {
     if(isCurrentUserTurn) {
       listen({ interimResults: true, continuous: true, lang: "id-ID" });
     }
+  }
+
+  function createRoom() {
+    socket.emit("create room", roomName, roomTheme);
+  }
+
+  function joinRoom(roomId) {
+    socket.emit("join room", roomId);
   }
 
   function leaveRoom() {
@@ -155,50 +164,35 @@ export default (props) => {
     }
   }
 
-
-  if(currentRound){
-    return(
-      <>
-          <div>
-              <div className="imageBackground"></div>
-          
-              <div className="timerFiveMinutes">
-                <p>Global Countdown: {currentRound.globalCountdown}</p>
-              </div>
-          
-              <div>
-                <textarea type="text" className="inputStoryBox input" placeholder="input your story in 30 second" value={currentStoryText}
-                onChange={inputCurrentStoryText}
-                readOnly={!isCurrentUserTurn}></textarea>
-                <button
-                onClick={startListening}>
-                Start
-              </button>
-          <button onClick={stop}>Stop</button>
-          {listening && <div>Go ahead I'm listening</div>}
-              </div>
-
-              <div>
-                current turn:{" "}
-                {currentRoom.users[currentRound.currentUserIndex].name}
-              </div>
-          
-              <div>
-                <p className="timer30Second">Countdown: {currentRound.countdown}</p>
-              </div>
-          
-              <div className="story">
-                <h1 className="titleOutputStory"> your story</h1>
-                <p className="outputStory">{`${currentRound.allText}${currentRound.currentText}`}</p>
-              </div>
-          </div>
-      </>
-    );
-  }
-
   return (
-    <>
+    <div>
+      <h1>Create Room</h1>
+      <input
+        type="text"
+        placeholder="name"
+        onChange={(e) => setRoomName(e.target.value)}
+        value={roomName}
+      />
+      <input
+        type="text"
+        placeholder="theme"
+        onChange={(e) => setRoomTheme(e.target.value)}
+        value={roomTheme}
+      />
+      <button onClick={createRoom}>Create Room</button>
+      <h1>Room List</h1>
+      <ul>
+        {rooms.map((room) => {
+          return (
+            <li key={room.id}>
+              {room.name} ({room.usersCount}/{room.maxUser}){" "}
+              <button onClick={() => joinRoom(room.id)}>Join</button>
+            </li>
+          );
+        })}
+      </ul>
+      <h1>Joined Room</h1>
       {renderJoinedRoom()}
-    </>
+    </div>
   );
-};
+}

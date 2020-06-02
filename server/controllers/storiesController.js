@@ -4,7 +4,7 @@ class storiesController{
 
     static getAllStories(req,res){
 
-        stories.findAll()
+        stories.findAll({ order: [["id","DESC"]]})
         .then(data=>{
             res.status(200).json(data);
         })
