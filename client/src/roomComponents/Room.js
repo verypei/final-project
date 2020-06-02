@@ -63,6 +63,12 @@ export default function Room() {
     }
   }, [currentRoom, currentRound]);
 
+  useEffect(() => {
+    if(listening && !isCurrentUserTurn) {
+      stop();
+    }
+  }, [listening, isCurrentUserTurn, stop]);
+
   function createRoom() {
     socket.emit("create room", roomName, roomTheme);
   }
