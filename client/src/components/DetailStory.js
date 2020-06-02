@@ -4,8 +4,7 @@ import { CardDeck, Card} from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getStoryDetail } from "../store/actions/storiesAction";
 import Speech from "speak-tts";
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
+import jsPDF from 'jspdf';
 
 
 export default () => {
@@ -81,14 +80,17 @@ export default () => {
   }
 
   function exportDocument(){
-    const input = document.getElementById('export')
-    html2canvas(input)
-    .then((canvas) => {
-      const imgData = canvas.toDataURL('image/png')
-      const pdf = new jsPDF()
-      pdf.addImage(imgData, 'JPEG', 0, 0)
-      pdf.save(storyDetail.title+'.pdf')
-    })
+    const pdf = new jsPDF();
+    pdf.fromHTML((
+      `
+      <h1>${storyDetail.title}</h1>
+      <h2 style="font-size: 1em">Created By: ${storyDetail.createdBy} | Theme: ${storyDetail.theme}</h2>
+      <p>${storyDetail.content}</p>
+      `
+    ), 15, 15, {
+      width: 180
+    });
+    pdf.save(storyDetail.title+'.pdf');
   }
 
   return (
