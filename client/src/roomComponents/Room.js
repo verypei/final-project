@@ -69,6 +69,12 @@ export default function Room() {
     }
   }, [listening, isCurrentUserTurn, stop]);
 
+  function startListening() {
+    if(isCurrentUserTurn) {
+      listen({ interimResults: true, continuous: true, lang: "id-ID" });
+    }
+  }
+
   function createRoom() {
     socket.emit("create room", roomName, roomTheme);
   }
@@ -135,9 +141,7 @@ export default function Room() {
             readOnly={!isCurrentUserTurn}
           />
           <button
-            onClick={() =>
-              listen({ interimResults: true, continuous: true, lang: "id-ID" })
-            }
+            onClick={startListening}
           >
             Start
           </button>
