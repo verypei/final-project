@@ -50,6 +50,12 @@ export default () => {
           onstart: () => {
             console.log("Start utterance");
           },
+          onend: () => {
+            console.log("End utterance");
+          },
+          onresume: () => {
+            console.log("Resume utterance");
+          },
           onboundary: (event) => {
             console.log(
               event.name +
@@ -89,6 +95,13 @@ export default () => {
             <small className="text-muted">{storyDetail.createdBy}</small>
             <Button variant="dark" onClick={() => _init()} className="mx-3">
               Play
+            </Button>
+            <Button
+              variant="dark"
+              onClick={() => speech.cancel()}
+              className="mx-3"
+            >
+              Stop
             </Button>
           </Card.Footer>
         </Card>
