@@ -1,5 +1,5 @@
 import RoomAvailable from "../components/roomAvailable";
-import { Modal, Container, Button, Form, CardDeck } from "react-bootstrap";
+import { Modal, Container, Button, Form, CardDeck, Row } from "react-bootstrap";
 import logo1 from "../assets/logo1.png";
 import React, { useState, useEffect } from "react";
 import socket from "../socket";
@@ -57,7 +57,7 @@ export default () => {
         Create Room
       </Button>
 
-      <CardDeck>
+      <Row>
         {rooms.map((room) => {
           return (
             <RoomAvailable
@@ -70,7 +70,7 @@ export default () => {
             ></RoomAvailable>
           );
         })}
-      </CardDeck>
+      </Row>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

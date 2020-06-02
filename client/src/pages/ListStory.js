@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { CardDeck, Container } from "react-bootstrap";
+import { CardDeck, Container, Row } from "react-bootstrap";
 import Story from "../components/Story";
 import { useSelector, useDispatch } from "react-redux";
 import { getStories } from "../store/actions/storiesAction";
@@ -23,11 +23,11 @@ export default () => {
       <Container>
         <h1>Stories</h1>
         <Container>
-          <CardDeck className="d-flex justify-content-md-center">
+          <Row className="d-flex justify-content-md-center">
             {story.map((data, index) => {
               return <Story key={index} dataStory={data} />;
             })}
-          </CardDeck>
+          </Row>
         </Container>
       </Container>
     </>

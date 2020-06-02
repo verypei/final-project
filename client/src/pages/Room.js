@@ -5,9 +5,10 @@ import { useHistory } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import MicIcon from "@material-ui/icons/Mic";
 import MicOffIcon from "@material-ui/icons/MicOff";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import swal from "sweetalert";
 
-export default () => {
+export default (props) => {
   const history = useHistory();
 
   const { listen, listening, stop } = useSpeechRecognition({
@@ -28,12 +29,15 @@ export default () => {
   const [isCurrentUserTurn, setIsCurrentUserTurn] = useState(false);
 
   useEffect(() => {
+    console.log(props);
+    props.setShowNavbar(false);
     socket.emit("update room data");
     socket.emit("update round");
-    
+
     socket.on("leave room", (result) => {
       setCurrentRoom(null);
       console.log(result);
+      history.push('/home');
     });
     socket.on("update room data", (room) => {
       setCurrentRoom(room);
@@ -41,6 +45,9 @@ export default () => {
     socket.on("update round", (round) => {
       setCurrentRound(round);
     });
+    return () => {
+      props.setShowNavbar(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -108,7 +115,13 @@ export default () => {
               current turn :{" "}
               {currentRoom.users[currentRound.currentUserIndex].name}
             </h3>
-            <h4>Your time : {currentRound.countdown}</h4>
+            {currentRoom.status === 'waiting' ?
+              currentRoom.users.length <= 1 ?
+                <h4>Waiting for another players...</h4> :
+                <h4>Starting in {currentRound.countdown} {currentRound.countdown === 1 ? 'second' : 'seconds'}</h4>
+              :
+              <h4>Your time : {currentRound.countdown}</h4>
+            }
           </div>
           <Row>
             <Col>
@@ -141,14 +154,21 @@ export default () => {
                     <MicIcon style={{ fontSize: 20 }} />
                   </Button>
                 ) : (
-                  <Button className="my-3" onClick={stop}>
-                    {" "}
-                    <MicOffIcon style={{ fontSize: 20 }} />
-                  </Button>
-                )}
+                    <Button className="my-3" onClick={stop}>
+                      {" "}
+                      <MicOffIcon style={{ fontSize: 20 }} />
+                    </Button>
+                  )}
               </Form.Group>
             </Col>
           </Row>
+          {currentRoom.status === 'waiting' ? (
+            <div className="my-2" style={{ float: 'right' }}>
+              <Button variant="secondary" onClick={leaveRoom}>
+                <ExitToAppIcon style={{ fontsize: 30 }} />
+              </Button>
+            </div>
+          ) : null}
         </Container>
       );
     }

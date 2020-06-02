@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -8,11 +8,13 @@ import store from "./store";
 import { Provider } from "react-redux";
 
 function App() {
+  const [showNavbar, setShowNavbar] = useState(true);
+
   return (
     <Provider store={store}>
       <div className="App">
         <Router>
-          <Navbar></Navbar>
+          {showNavbar ? <Navbar></Navbar> : null}
           <Switch>
             <Route path="/home">
               <Home />
@@ -24,7 +26,7 @@ function App() {
               <ListStory />
             </Route>
             <Route path="/room">
-              <Room />
+              <Room setShowNavbar={setShowNavbar} />
             </Route>
             <Route path="/voice">
               <VoiceToText />

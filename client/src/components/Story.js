@@ -8,23 +8,25 @@ export default (props) => {
   let content = props.dataStory.content;
   return (
     <>
-      <Card className="my-3 mx-3" style={{ flex: "25% 0 1" }}>
-        <Card.Body>
+      <Col md={4}>
+        <Card className="my-3 mx-3">
+          <Card.Body>
+            <div>
+              <Card.Title>{props.dataStory.title}</Card.Title>
+              <Card.Text>{content.slice(0, 100)}</Card.Text>
+            </div>
+          </Card.Body>
           <div>
-            <Card.Title>{props.dataStory.title}</Card.Title>
-            <Card.Text>{content.slice(0, 100)}</Card.Text>
-          </div>
-        </Card.Body>
-        <div>
-          <Card.Footer>
-            <button
-              onClick={() => history.push(`/story/${props.dataStory.id}`)}
-            >
-              Read More...
+            <Card.Footer>
+              <button
+                onClick={() => history.push(`/story/${props.dataStory.id}`)}
+              >
+                Read More...
             </button>
-          </Card.Footer>
-        </div>
-      </Card>
+            </Card.Footer>
+          </div>
+        </Card>
+      </Col>
     </>
   );
 };
