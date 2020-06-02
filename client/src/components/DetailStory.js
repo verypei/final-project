@@ -4,11 +4,13 @@ import { CardDeck, Card, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getStoryDetail } from "../store/actions/storiesAction";
 import Speech from "speak-tts";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export default () => {
   const { id } = useParams();
   const { storyDetail, loading } = useSelector((state) => state.stories);
-  //   console.log(storyDetail, loading);
+  console.log(storyDetail, loading);
 
   const speech = new Speech(); // will throw an exception if not browser supported
   if (speech.hasBrowserSupport()) {
@@ -83,14 +85,25 @@ export default () => {
     return <p>Loading...</p>;
   }
 
+  function exportDocument() {
+    const input = document.getElementById("export");
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, "JPEG", 0, 0);
+      pdf.save(storyDetail.title + ".pdf");
+    });
+  }
+
   return (
     <>
       <CardDeck>
         <Card>
-          <Card.Body>
+          <Card.Body id="export">
             <Card.Title>{storyDetail.title}</Card.Title>
             <Card.Text>{storyDetail.content}</Card.Text>
           </Card.Body>
+
           <Card.Footer>
             <small className="text-muted">{storyDetail.createdBy}</small>
             <Button variant="dark" onClick={() => _init()} className="mx-3">

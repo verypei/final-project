@@ -9,13 +9,13 @@ import { Provider } from "react-redux";
 
 function App() {
   return (
-    <div className="App">
-      <Provider store={store}>
+    <Provider store={store}>
+      <div className="App">
         <Router>
           <Navbar></Navbar>
           <Switch>
-            <Route path="/login">
-              <Login />
+            <Route path="/home">
+              <Home />
             </Route>
             <Route path="/story/:id">
               <Detail />
@@ -30,12 +30,19 @@ function App() {
               <VoiceToText />
             </Route>
             <Route exact path="/">
-              <Home />
+              <Login />
             </Route>
           </Switch>
         </Router>
-      </Provider>
-    </div>
+      </div>
+    </Provider>
+
+    // function App() {
+    //   return (
+    //     <div className="App">
+    //       <UserName />
+    //       <Room />
+    //     </div>
   );
 }
 

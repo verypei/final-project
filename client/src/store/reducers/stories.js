@@ -2,7 +2,7 @@ import { GET_STORY, GET_STORY_DETAIL } from "../actions/types";
 
 const initialState = {
   story: [],
-  storyDetail: null,
+  storyDetail: {},
   loading: true,
 };
 

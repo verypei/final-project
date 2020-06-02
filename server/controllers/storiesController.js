@@ -4,12 +4,12 @@ class storiesController{
 
     static getAllStories(req,res){
 
-        stories.findAll()
+        stories.findAll({ order: [["id","DESC"]]})
         .then(data=>{
-            res.status(201).json(data);
+            res.status(200).json(data);
         })
         .catch(err=>{
-            res.status(404).json(err);
+            res.status(500).json({message: "internal server error"});
         })
     }
 
@@ -21,18 +21,22 @@ class storiesController{
             theme:req.body.theme,
             createdBy:req.body.createdBy
         }
-            
+        // console.log(obj,"======================")
         stories.create(obj)
         .then(data=>{
             res.status(201).json(data);
         })
         .catch(err=>{
-            if(err.message){
+            if(err.name == 'SequelizeValidationError'){
+                res.status(400).json({
+                    message: err.errors[0].message
+                });
+            }else if(err.message){
                 res.status(400).json({
                     message: err.message
                 })
             }else{
-                res.status(500).json("internal server error");
+                res.status(500).json({message: "internal server error"});
             }
         })
     }
@@ -42,10 +46,14 @@ class storiesController{
         let id = req.params.id
         stories.findOne({where:{id}})
         .then(data=>{
-            res.status(200).json(data)
+            if(data) {
+                res.status(200).json(data)
+            } else {
+                res.status(404).json({message: 'story not found'})
+            }
         })
         .catch(err=>{
-            res.status(404).json(err)
+            res.status(500).json({message: "internal server error"});
         })
     }
 
