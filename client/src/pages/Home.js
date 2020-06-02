@@ -34,6 +34,9 @@ export default () => {
       console.log(result);
       history.push("/room");
     });
+    return () => {
+      socket.off('get rooms');
+    }
   }, []);
 
   function createRoom(e) {
