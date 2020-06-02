@@ -15,6 +15,7 @@
   },
   "production": {
     "dialect": "postgres",
+    "database": "stories",
     "use_env_variable": "DATABASE_URL"
   }
 }
