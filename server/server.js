@@ -87,6 +87,19 @@ io.on("connection", (socket) => {
       io.emit("get rooms", getRoomsData());
       joinRoom(socket, createdRoom);
     }
+
+    socket.on("update room data", () => {
+      console.log('update room data called');
+      socket.emit('update room data', getViewableRoomData(socket.joinedRoom, true));
+    });
+
+    socket.on("update round", () => {
+      if(socket.joinedRoom) {
+        socket.emit('update round', socket.joinedRoom.round);
+      } else {
+        socket.emit('update round', null);
+      }
+    });
   });
 
   socket.on("join room", (roomId) => {

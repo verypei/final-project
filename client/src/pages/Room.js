@@ -28,6 +28,9 @@ export default () => {
   const [isCurrentUserTurn, setIsCurrentUserTurn] = useState(false);
 
   useEffect(() => {
+    socket.emit("update room data");
+    socket.emit("update round");
+    
     socket.on("leave room", (result) => {
       setCurrentRoom(null);
       console.log(result);
@@ -93,7 +96,7 @@ export default () => {
   }
 
   function renderJoinedRoom() {
-    if (!currentRound) {
+    if (!currentRound || !currentRoom) {
       return <h2>Not joined a room</h2>;
     } else {
       return (
