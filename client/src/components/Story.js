@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Col } from "react-bootstrap";
+import { Card, Row, Col, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 export default (props) => {
@@ -18,11 +18,12 @@ export default (props) => {
           </Card.Body>
           <div>
             <Card.Footer>
-              <button
+              <Button
+                variant="primary"
                 onClick={() => history.push(`/story/${props.dataStory.id}`)}
               >
                 Read More...
-            </button>
+              </Button>
             </Card.Footer>
           </div>
         </Card>

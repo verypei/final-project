@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  /* background-image: linear-gradient(silver,white); */
+  background-image: linear-gradient(silver, white);
 }
 
 .App-logo {
@@ -38,11 +38,11 @@
   }
 }
 
-.navbar{
+.navbar {
   background-color: rgba(0, 0, 0, 0.2);
   height: 5%;
 }
-.imageLogin{
+.imageLogin {
   width: 60%;
   height: 90%;
   background-size: contain;
@@ -50,11 +50,11 @@
   position: absolute;
   left: 1%;
   top: 13%;
-  padding: 2%,2%;
+  padding: 2%, 2%;
 }
 
-.navbarLink{
-  font-family: Georgia, 'Times New Roman', Times, serif;
+.navbarLink {
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 25px;
   font-weight: bolder;
   color: black;
@@ -63,8 +63,8 @@
   top: 5%;
 }
 
-.inputLogin{
-  position:relative;
+.inputLogin {
+  position: relative;
   left: 29%;
   top: 100px;
   width: 200px;
@@ -72,26 +72,26 @@
   border-radius: 10px;
 }
 
-.buttonLogin{
-  position: relative;;
+.buttonLogin {
+  position: relative;
   left: 14%;
   top: 150px;
   width: 200px;
   height: 35px;
   border-radius: 10px;
-  color:black;
+  color: black;
   background-color: rgba(0, 0, 0, 0.2);
   font-weight: bolder;
 }
 
-.timerFiveMinutes{
-  color:black;
+.timerFiveMinutes {
+  color: black;
   font-size: 50px;
   font-weight: bolder;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-.inputStoryBox{
+.inputStoryBox {
   width: 500px;
   height: 300px;
   position: absolute;
@@ -103,64 +103,63 @@
   z-index: 1000;
 }
 
-.timer30Second{
-  color:black;
+.timer30Second {
+  color: black;
   position: absolute;
   left: 1350px;
   top: 250px;
   font-size: 35px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-.submitTextButton{
+.submitTextButton {
   width: 200px;
   height: 35px;
   position: absolute;
   left: 800px;
   top: 600px;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.2); 
+  background-color: rgba(0, 0, 0, 0.2);
   color: black;
   font-weight: bolder;
 }
 
-.outputStory{
+.outputStory {
   width: 650px;
   height: 500px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-style: italic;
   font-weight: bolder;
   margin-top: 10px;
 }
 
-.titleOutputStory{
-  font-family: Georgia, 'Times New Roman', Times, serif;
+.titleOutputStory {
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-style: italic;
   color: black;
   font-weight: bolder;
 }
 
-.story{
+.story {
   position: relative;
   left: 10px;
   top: 10px;
   text-align: left;
 }
 
-.createRoomButton{
+.createRoomButton {
   width: 200px;
   height: 35px;
   position: absolute;
   left: 100px;
   top: 150px;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.2); 
+  background-color: rgba(0, 0, 0, 0.2);
   color: black;
   font-weight: bolder;
 }
 
-
-.roomAvailable{
+.roomAvailable {
   width: 300px;
   /* height: 100px; */
   background-color: grey;
@@ -172,18 +171,18 @@
   margin-bottom: 25px;
 }
 
-.titleRoomAvailable{
-  font-family: Georgia, 'Times New Roman', Times, serif;
+.titleRoomAvailable {
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 25px;
   font-weight: bolder;
 }
 
-.joinRoomButton{
+.joinRoomButton {
   width: 100px;
   height: 25px;
-  background-color:rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
   color: black;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-weight: bolder;
   position: relative;
   top: 15px;
@@ -191,21 +190,21 @@
   line-height: 18px;
 }
 
-.formCreateRoom{
-  background-image: linear-gradient(grey,silver);
+.formCreateRoom {
+  background-image: linear-gradient(grey, silver);
   background-size: cover;
   display: flex;
   flex-direction: column;
   /* width: 300px; */
-  height:200px
+  height: 200px;
 }
 
-.buttonModalFlexDirection{
+.buttonModalFlexDirection {
   display: flex;
   flex-direction: row;
 }
 
-.inputTitleModal{
+.inputTitleModal {
   width: 300px;
   height: 40px;
   border-radius: 10px;
@@ -214,16 +213,16 @@
   left: 100px;
 }
 
-.selectTheme{
+.selectTheme {
   width: 300px;
   height: 35px;
   border-radius: 10px;
   position: relative;
   margin-top: 20px;
-  margin-left:100px;
+  margin-left: 100px;
 }
 
-.buttonModal{
+.buttonModal {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -233,46 +232,46 @@
   margin-top: 20px;
   position: relative;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.2); 
+  background-color: rgba(0, 0, 0, 0.2);
   color: black;
   font-weight: bolder;
 }
 
-.button:focus{
+.button:focus {
   outline: 0;
 }
 
-.input{
+.input {
   outline: 0;
 }
 
-.buttonReadMore{
+.buttonReadMore {
   width: 150px;
   height: 35px;
   border-radius: 10px;
   text-align: center;
   line-height: 5px;
-  background-color: rgba(0, 0, 0, 0.2); 
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
-.buttonPlay{
+.buttonPlay {
   width: 150px;
   height: 30px;
   border-radius: 10px;
   text-align: center;
   line-height: 5px;
-  background-color: rgba(0, 0, 0, 0.2); 
+  background-color: rgba(0, 0, 0, 0.2);
   margin: 0px 10px;
 }
 
-.textMutedCreatedBy{
+.textMutedCreatedBy {
   text-align: center;
   line-height: 25px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 20px;
 }
 
-.imageHome{
+.imageHome {
   position: fixed;
   overflow: hidden;
   top: 120px;
@@ -283,7 +282,7 @@
   opacity: 0.3;
 }
 
-.imageHomeListStory{
+.imageHomeListStory {
   width: 1200px;
   height: 600px;
   opacity: 0.5;
@@ -293,13 +292,13 @@
   top: 50px;
 }
 
-.roomAvailableHome{
+.roomAvailableHome {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   padding-right: 50px;
 }
-.imageBackground{
+.imageBackground {
   background-image: url("./assets/logo1.png");
   background-repeat: no-repeat;
   width: 1200px;
@@ -310,55 +309,38 @@
   left: 10px;
   top: 50px;
 }
-.titleListStory{
-  font-family: Georgia, 'Times New Roman', Times, serif;
+.titleListStory {
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 35px;
   font-weight: bolder;
 }
 
-.cardBodyStory{
+.cardBodyStory {
   width: 700px;
 }
 
-.logoListStory{
+.logoListStory {
   position: fixed;
   top: 250px;
   left: 800px;
   overflow-x: hidden;
 }
 
-.listStory{
+.listStory {
   position: absolute;
   top: 150px;
   left: 100px;
 }
 
-.exportToPdfLogo{
+.exportToPdfLogo {
   font-size: 30px;
   text-align: center;
   line-height: 5px;
 }
 
-.cardFooter{
+.cardFooter {
   display: flex;
   flex-direction: row;
   justify-content: center;
   padding: 5px 0px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import MicIcon from "@material-ui/icons/Mic";
 import MicOffIcon from "@material-ui/icons/MicOff";
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import swal from "sweetalert";
 
 export default (props) => {
@@ -37,7 +37,6 @@ export default (props) => {
     socket.on("leave room", (result) => {
       setCurrentRoom(null);
       console.log(result);
-      history.push('/home');
     });
     socket.on("update room data", (room) => {
       setCurrentRoom(room);
@@ -47,7 +46,7 @@ export default (props) => {
     });
     return () => {
       props.setShowNavbar(true);
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -76,10 +75,11 @@ export default (props) => {
       swal({
         icon: "warning",
         text: "Time is up!!",
+      }).then((value) => {
+        finishStoury();
       });
-      //history.push("/story");
     }
-  }, [currentRoom]);
+  }, [currentRoom, history]);
 
   function startListening() {
     if (isCurrentUserTurn) {
@@ -91,8 +91,14 @@ export default (props) => {
     }
   }
 
+  function finishStoury() {
+    socket.emit("leave room");
+    history.push("/story");
+  }
+
   function leaveRoom() {
     socket.emit("leave room");
+    history.push("/home");
   }
 
   function inputCurrentStoryText(event) {
@@ -115,13 +121,18 @@ export default (props) => {
               current turn :{" "}
               {currentRoom.users[currentRound.currentUserIndex].name}
             </h3>
-            {currentRoom.status === 'waiting' ?
-              currentRoom.users.length <= 1 ?
-                <h4>Waiting for another players...</h4> :
-                <h4>Starting in {currentRound.countdown} {currentRound.countdown === 1 ? 'second' : 'seconds'}</h4>
-              :
+            {currentRoom.status === "waiting" ? (
+              currentRoom.users.length <= 1 ? (
+                <h4>Waiting for another players...</h4>
+              ) : (
+                <h4>
+                  Starting in {currentRound.countdown}{" "}
+                  {currentRound.countdown === 1 ? "second" : "seconds"}
+                </h4>
+              )
+            ) : (
               <h4>Your time : {currentRound.countdown}</h4>
-            }
+            )}
           </div>
           <Row>
             <Col>
@@ -154,16 +165,16 @@ export default (props) => {
                     <MicIcon style={{ fontSize: 20 }} />
                   </Button>
                 ) : (
-                    <Button className="my-3" onClick={stop}>
-                      {" "}
-                      <MicOffIcon style={{ fontSize: 20 }} />
-                    </Button>
-                  )}
+                  <Button className="my-3" onClick={stop}>
+                    {" "}
+                    <MicOffIcon style={{ fontSize: 20 }} />
+                  </Button>
+                )}
               </Form.Group>
             </Col>
           </Row>
-          {currentRoom.status === 'waiting' ? (
-            <div className="my-2" style={{ float: 'right' }}>
+          {currentRoom.status === "waiting" ? (
+            <div className="my-2" style={{ float: "right" }}>
               <Button variant="secondary" onClick={leaveRoom}>
                 <ExitToAppIcon style={{ fontsize: 30 }} />
               </Button>

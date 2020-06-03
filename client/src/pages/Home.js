@@ -1,9 +1,8 @@
-import RoomAvailable from "../components/roomAvailable";
-import { Modal, Container, Button, Form, CardDeck, Row } from "react-bootstrap";
-import logo1 from "../assets/logo1.png";
 import React, { useState, useEffect } from "react";
+import RoomAvailable from "../components/roomAvailable";
+import { Modal, Container, Button, Form, Row } from "react-bootstrap";
 import socket from "../socket";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 
 export default () => {
   const [show, setShow] = useState(false);
@@ -35,8 +34,8 @@ export default () => {
       history.push("/room");
     });
     return () => {
-      socket.off('get rooms');
-    }
+      socket.off("get rooms");
+    };
   }, []);
 
   function createRoom(e) {
@@ -50,10 +49,13 @@ export default () => {
     socket.emit("join room", roomId);
   }
 
+  if (!localStorage.getItem("username")) {
+    return <Redirect to="/" />;
+  }
   return (
     <Container>
       <h1>Welcome {localStorage.getItem("username")}</h1>
-      <Button className="my-3" variant="secondary" onClick={handleShow}>
+      <Button className="my-3" variant="primary" onClick={handleShow}>
         Create Room
       </Button>
 
@@ -64,6 +66,7 @@ export default () => {
               key={room.id}
               name={room.name}
               theme={room.theme}
+              language={room.language}
               usersCount={room.usersCount}
               maxUser={room.maxUser}
               onClickJoin={() => joinRoom(room.id)}

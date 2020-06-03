@@ -9,12 +9,15 @@ export default (props) => {
             <Card.Title>{props.name}</Card.Title>
             <Card.Text>{props.theme}</Card.Text>
             <Card.Text>
-              {props.usersCount} / {props.maxUser}
+              {props.language == "en-US" ? "English" : "Indonesia"}
+            </Card.Text>
+            <Card.Text>
+              {props.usersCount} / {props.maxUser} players
             </Card.Text>
           </Card.Body>
           <Button variant="dark" onClick={props.onClickJoin}>
             Join
-        </Button>
+          </Button>
         </Card>
       </Col>
     </>
