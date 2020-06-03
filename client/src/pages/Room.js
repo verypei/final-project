@@ -110,6 +110,7 @@ export default (props) => {
       return (
         <Container>
           <div>
+            <h2>Global Countdown : {currentRound.globalCountdown}</h2>
             <div>
               {
                 currentRoom.users.map((user, index) => {
