@@ -33,17 +33,21 @@ export default () => {
       console.log(result);
       if(!result.success){
         swal({
-          icon: "warning",
+          icon: "error",
           text: result.message,
-        }).then((value) => {
-          
         });
-
       }
     });
     socket.on("join room", (result) => {
       console.log(result);
-      history.push("/room");
+      if(result.success) {
+        history.push("/room");
+      } else {
+        swal({
+          icon: "error",
+          text: result.message,
+        });
+      }
     });
     return () => {
       socket.off("get rooms");
@@ -75,10 +79,8 @@ export default () => {
           onClick={handleShow}>
         Create Room
       </Button>
-      <div>
-          <img src={RoomEmpty} className="imageRoomEmpty"></img>
-      </div>
 
+      {rooms && rooms.length ? (
       <Row>
         {rooms.map((room) => {
           return (
@@ -94,6 +96,12 @@ export default () => {
           );
         })}
       </Row>
+      ) : (
+        <div>
+          <img src={RoomEmpty} className="imageRoomEmpty"></img>
+          <h3>It's quite empty in here, create a room to make a stOURy!</h3>
+        </div>
+      )}
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
