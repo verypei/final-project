@@ -5,6 +5,7 @@ import socket from "../socket";
 import { useHistory, Redirect } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import swal from "sweetalert";
+import RoomEmpty from "../assets/tumbleweed.svg";
 
 export default () => {
   const [show, setShow] = useState(false);
@@ -65,6 +66,7 @@ export default () => {
     return <Redirect to="/" />;
   }
   return (
+    <>
     <Container>
       <h1>Welcome {localStorage.getItem("username")}</h1>
       <Button className="my-3"  
@@ -73,6 +75,9 @@ export default () => {
           onClick={handleShow}>
         Create Room
       </Button>
+      <div>
+          <img src={RoomEmpty} className="imageRoomEmpty"></img>
+      </div>
 
       <Row>
         {rooms.map((room) => {
@@ -154,5 +159,6 @@ export default () => {
         </Modal.Footer>
       </Modal>
     </Container>
+    </>
   );
 };

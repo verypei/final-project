@@ -271,6 +271,11 @@
   font-size: 20px;
 }
 
+.imageRoomEmpty{
+  width: 50%;
+  height: 50%;
+}
+
 .imageHome {
   position: fixed;
   overflow: hidden;

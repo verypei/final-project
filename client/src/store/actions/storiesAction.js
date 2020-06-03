@@ -1,5 +1,6 @@
 import { GET_STORY, GET_STORY_DETAIL } from "./types";
-const url = "http://localhost:3001/stories";
+// const url = "http://localhost:3001/stories";
+const url = "https://stoury-hacktiv8.herokuapp.com/stories";
 
 export function getStories() {
   return (dispatch, getState) => {
