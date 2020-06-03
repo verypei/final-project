@@ -5,7 +5,7 @@ import socket from "../socket";
 import { useHistory, Redirect } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import swal from "sweetalert";
-import RoomEmpty from "../assets/tumbleweed.svg";
+import RoomEmpty from "../assets/book.svg";
 
 export default () => {
   const [show, setShow] = useState(false);
@@ -25,6 +25,7 @@ export default () => {
       socket.emit("set name", localStorage.getItem("username"));
     }
     socket.emit("get rooms");
+    console.log('test');
     socket.on("get rooms", (roomsFromServer) => {
       console.log(roomsFromServer);
       setRooms(roomsFromServer);
@@ -92,6 +93,7 @@ export default () => {
               usersCount={room.usersCount}
               maxUser={room.maxUser}
               onClickJoin={() => joinRoom(room.id)}
+              status={room.status}
             ></RoomAvailable>
           );
         })}

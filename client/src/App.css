@@ -1,6 +1,19 @@
 .App {
   text-align: center;
-  background-image: linear-gradient(silver, white);
+  min-height: 100vh;
+  /* background-image: linear-gradient(silver,white); */
+}
+
+.App:before {
+  content: ' ';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: url('./assets/background.svg');
+  background-size: cover;
+  z-index: -9999;
 }
 
 .App-logo {
@@ -377,4 +390,13 @@
 .user-list-item.current-turn {
   background-color: #36a5ff;
   color: #ffffff;
+}
+
+.room-container {
+  border: 1px solid #7b7b7b;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px 4px 0px #a5a2a2;
+  padding: 20px;
+  background-color: #ffffff;
 }

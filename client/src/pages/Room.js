@@ -8,6 +8,7 @@ import MicOffIcon from "@material-ui/icons/MicOff";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import swal from "sweetalert";
 import UserListItem from "../components/UserListItem";
+import formatTime from '../utils/formatTime';
 
 export default (props) => {
   const history = useHistory();
@@ -19,6 +20,9 @@ export default (props) => {
         socket.emit("input story", result);
       }
     },
+    onEnd: () => {
+
+    }
   });
 
   const [currentRoom, setCurrentRoom] = useState(null);
@@ -27,7 +31,11 @@ export default (props) => {
 
   const [currentStoryText, setCurrentStoryText] = useState("");
 
+  const [speechRecognitionResult, setSpeechRecognitionResult] = useState("");
+
   const [isCurrentUserTurn, setIsCurrentUserTurn] = useState(false);
+
+  const [isFinishDialogShown, setIsFinishDialogShown] = useState(false);
 
   useEffect(() => {
     console.log(props);
@@ -72,7 +80,7 @@ export default (props) => {
   }, [listening, isCurrentUserTurn, stop]);
 
   useEffect(() => {
-    if (currentRoom && currentRoom.status === "finished") {
+    if (currentRoom && currentRoom.status === "finished" && !isFinishDialogShown) {
       swal({
         icon: "warning",
         text: "Time is up!!",
@@ -114,9 +122,9 @@ export default (props) => {
       return <h2>Not joined a room</h2>;
     } else {
       return (
-        <Container>
-          <div>
-            <h2>Global Countdown : {currentRound.globalCountdown}</h2>
+        <Container className="room-container">
+          <div> 
+            <h2>{formatTime(currentRound.globalCountdown)}</h2>
             <div>
               {
                 currentRoom.users.map((user, index) => {
@@ -127,9 +135,7 @@ export default (props) => {
               }
             </div>
             <h3>
-              {" "}
-              current turn :{" "}
-              {currentRoom.users[currentRound.currentUserIndex].name}
+              current turn : {currentRoom.users[currentRound.currentUserIndex].name}
             </h3>
             {currentRoom.status === "waiting" ? (
               currentRoom.users.length <= 1 ? (
@@ -145,7 +151,7 @@ export default (props) => {
             )}
           </div>
           <Row>
-            <Col>
+            <Col xs={12} md={6}>
               {" "}
               <Form.Group controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Your Story</Form.Label>
@@ -157,7 +163,7 @@ export default (props) => {
                 />
               </Form.Group>
             </Col>
-            <Col>
+            <Col xs={12} md={6}>
               {" "}
               <Form.Group controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Current Input</Form.Label>
@@ -183,8 +189,8 @@ export default (props) => {
               </Form.Group>
             </Col>
           </Row>
-          {currentRoom.status === "waiting" ? (
-            <div className="my-2" style={{ float: "right" }}>
+          {currentRoom.status === 'waiting' || currentRoom.status === 'finished' ? (
+            <div className="my-2" style={{ textAlign: 'right' }}>
               <Button variant="secondary" onClick={leaveRoom}>
                 <ExitToAppIcon style={{ fontsize: 30 }} />
               </Button>

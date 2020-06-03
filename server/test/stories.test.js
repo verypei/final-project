@@ -10,7 +10,8 @@ describe('Stories Routes Test', () => {
         title: 'Morna',
         content: 'Morna is a unique world for all players to Experience. This world is a land based on the fantasy series of Morna Tales.',
         theme: 'Game',
-        createdBy: 'Jessica'
+        createdBy: 'Jessica',
+        language: 'en-US'
     }
     describe('POST /stories - create stories', () => {
         test('400 failed create story - should return error if title null', (done) => {
@@ -19,7 +20,8 @@ describe('Stories Routes Test', () => {
             .send({
                 content: 'Morna is a unique world for all players to Experience. This world is a land based on the fantasy series of Morna Tales.',
                 theme: 'Game',
-                createdBy: 'Jessica'
+                createdBy: 'Jessica',
+                language: 'en-US'
             })
             .then(response => {
                 const {body,status} = response
@@ -34,7 +36,8 @@ describe('Stories Routes Test', () => {
             .send({
                 title: 'Morna',
                 theme: 'Game',
-                createdBy: 'Jessica'
+                createdBy: 'Jessica',
+                language: 'en-US'
             })
             .then(response => {
                 const {body,status} = response
@@ -49,7 +52,8 @@ describe('Stories Routes Test', () => {
             .send({
                 title: 'Morna',
                 content: 'Morna is a unique world for all players to Experience. This world is a land based on the fantasy series of Morna Tales.',
-                createdBy: 'Jessica'
+                createdBy: 'Jessica',
+                language: 'en-US'
             })
             .then(response => {
                 const {body,status} = response
@@ -65,11 +69,28 @@ describe('Stories Routes Test', () => {
                 title: 'Morna',
                 content: 'Morna is a unique world for all players to Experience. This world is a land based on the fantasy series of Morna Tales.',
                 theme: 'Game',
+                language: 'en-US'
             })
             .then(response => {
                 const {body,status} = response
                 expect(status).toBe(400)
                 expect(body).toHaveProperty('message',`created by can't be empty`)
+                done()
+            })
+        })
+        test('400 failed create story - should return error if language null', (done) => {
+            request(app)
+            .post('/stories')
+            .send({
+                title: 'Morna',
+                content: 'Morna is a unique world for all players to Experience. This world is a land based on the fantasy series of Morna Tales.',
+                theme: 'Game',
+                createdBy: 'Jessica'
+            })
+            .then(response => {
+                const {body,status} = response
+                expect(status).toBe(400)
+                expect(body).toHaveProperty('message',`language can't be empty`)
                 done()
             })
         })
@@ -84,6 +105,7 @@ describe('Stories Routes Test', () => {
                 expect(body).toHaveProperty('content','Morna is a unique world for all players to Experience. This world is a land based on the fantasy series of Morna Tales.')
                 expect(body).toHaveProperty('theme','Game')
                 expect(body).toHaveProperty('createdBy','Jessica')
+                expect(body).toHaveProperty('language','en-US')
                 createdStoryId = body.id;
                 done()
             })
@@ -110,6 +132,7 @@ describe('Stories Routes Test', () => {
                 expect(body).toHaveProperty('content','Morna is a unique world for all players to Experience. This world is a land based on the fantasy series of Morna Tales.')
                 expect(body).toHaveProperty('theme','Game')
                 expect(body).toHaveProperty('createdBy', 'Jessica')
+                expect(body).toHaveProperty('language', 'en-US')
                 done()
             })
         })

@@ -48,6 +48,18 @@ module.exports = (sequelize, DataTypes) => {
           msg:"created by can't be empty"
         }
       }
+    },
+    language: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty:{
+          msg:"language can't be empty"
+        },
+        notNull:{
+          msg:"language can't be empty"
+        }
+      }
     }
   }, {});
   stories.associate = function(models) {

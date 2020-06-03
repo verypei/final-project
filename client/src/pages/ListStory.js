@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { CardDeck, Container, Row } from "react-bootstrap";
+import { CardDeck, Container, Row, Spinner } from "react-bootstrap";
 import Story from "../components/Story";
 import { useSelector, useDispatch } from "react-redux";
 import { getStories } from "../store/actions/storiesAction";
@@ -15,7 +15,7 @@ export default () => {
   }, [dispatch]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Spinner animation="grow" variant="primary" />;
   }
 
   return (

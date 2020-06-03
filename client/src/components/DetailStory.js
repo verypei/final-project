@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { CardDeck, Card, Button } from "react-bootstrap";
+import { CardDeck, Card, Button, Spinner } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getStoryDetail } from "../store/actions/storiesAction";
 import Speech from "speak-tts";
@@ -23,10 +23,11 @@ export default () => {
 
   function _init() {
     const speech = new Speech();
+    console.log(storyDetail.language);
     speech
       .init({
         volume: 0.5,
-        lang: "id-ID",
+        lang: storyDetail.language,
         rate: 1,
         pitch: 1,
         //'voice':'Google UK English Male',
@@ -85,7 +86,7 @@ export default () => {
   }, [dispatch, id]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Spinner animation="grow" variant="primary" />;
   }
 
   function exportDocument() {
@@ -114,7 +115,7 @@ export default () => {
         <Card>
           <Card.Body id="export">
             <Card.Title>{storyDetail.title}</Card.Title>
-            <Card.Text>{storyDetail.content}</Card.Text>
+            <Card.Text>{storyDetail.content ? storyDetail.content.split('\n').map(story => (<Fragment key={story}>{story}<br/></Fragment>)) : null}</Card.Text>
           </Card.Body>
 
           <Card.Footer>

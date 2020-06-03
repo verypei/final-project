@@ -67,7 +67,7 @@ export default () => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("test");
+      console.log("connected to server");
     });
 
     socket.on("set name", (result) => {
@@ -99,6 +99,12 @@ export default () => {
   //     </div>
   //   </>
   // );
+
+  if(localStorage.getItem('username')) {
+    //history.push("/home");
+    return <Redirect to="/home" />
+  }
+
   const classes = useStyles();
 
   if (localStorage.getItem("username")) {
