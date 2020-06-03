@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getStoryDetail } from "../store/actions/storiesAction";
 import Speech from "speak-tts";
 import html2canvas from "html2canvas";
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import jsPDF from "jspdf";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import StopIcon from "@material-ui/icons/Stop";
@@ -88,13 +89,23 @@ export default () => {
   }
 
   function exportDocument() {
-    const input = document.getElementById("export");
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, "JPEG", 0, 0);
-      pdf.save(storyDetail.title + ".pdf");
-    });
+    // const input = document.getElementById("export");
+    // html2canvas(input).then((canvas) => {
+    //   const imgData = canvas.toDataURL("image/png");
+    //   const pdf = new jsPDF();
+    //   pdf.addImage(imgData, "JPEG", 0, 0);
+    //   pdf.save(storyDetail.title + ".pdf");
+        const pdf = new jsPDF();
+        pdf.fromHTML((
+          `
+          <h1>${storyDetail.title}</h1>
+          <h2 style="font-size: 1em">Created By: ${storyDetail.createdBy} | Theme: ${storyDetail.theme}</h2>
+          <p>${storyDetail.content}</p>
+          `
+        ), 15, 15, {
+          width: 180
+        });
+        pdf.save(storyDetail.title+'.pdf');
   }
 
   return (
@@ -107,7 +118,7 @@ export default () => {
           </Card.Body>
 
           <Card.Footer>
-            <small className="text-muted">{storyDetail.createdBy}</small>
+            <small className="text-muted" style={{ float: "left" }}> {storyDetail.createdBy}</small>
             <Button
               className="py-1"
               onClick={() => speech.cancel()}
@@ -123,6 +134,14 @@ export default () => {
             >
               {" "}
               <PlayArrowIcon style={{ fontSize: 20 }} />
+            </Button>
+            <Button
+              onClick={exportDocument}
+              className="mx-3 py-1"
+              style={{ float: "right" }}
+            >
+              {" "}
+              <PictureAsPdfIcon style={{ fontSize: 20 }} />
             </Button>
           </Card.Footer>
         </Card>

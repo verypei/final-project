@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import RoomAvailable from "../components/roomAvailable";
-import { Modal, Container, Button, Form, Row } from "react-bootstrap";
+import { Modal, Container,Form, Row } from "react-bootstrap";
 import socket from "../socket";
 import { useHistory, Redirect } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import swal from "sweetalert";
 
 export default () => {
   const [show, setShow] = useState(false);
@@ -28,6 +30,15 @@ export default () => {
     });
     socket.on("create room", (result) => {
       console.log(result);
+      if(!result.success){
+        swal({
+          icon: "warning",
+          text: result.message,
+        }).then((value) => {
+          
+        });
+
+      }
     });
     socket.on("join room", (result) => {
       console.log(result);
@@ -40,7 +51,8 @@ export default () => {
 
   function createRoom(e) {
     e.preventDefault();
-    setShow(false);
+    // setShow(false);
+   
     console.log(roomLanguage);
     socket.emit("create room", roomName, roomTheme, roomLanguage);
   }
@@ -55,7 +67,10 @@ export default () => {
   return (
     <Container>
       <h1>Welcome {localStorage.getItem("username")}</h1>
-      <Button className="my-3" variant="primary" onClick={handleShow}>
+      <Button className="my-3"  
+          variant="contained"
+          color="primary" 
+          onClick={handleShow}>
         Create Room
       </Button>
 
@@ -127,10 +142,13 @@ export default () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="contained"
+            color="default" className="mx-3" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={createRoom}>
+          <Button 
+            variant="contained"
+            color="primary" onClick={createRoom}>
             Create Room
           </Button>
         </Modal.Footer>

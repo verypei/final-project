@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, Row, Col, Button } from "react-bootstrap";
+import { Card, Row, Col} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
 export default (props) => {
   const history = useHistory();
@@ -8,7 +9,7 @@ export default (props) => {
   let content = props.dataStory.content;
   return (
     <>
-      <Col md={4}>
+      <Col md={10} >
         <Card className="my-3 mx-3">
           <Card.Body>
             <div>
@@ -19,7 +20,8 @@ export default (props) => {
           <div>
             <Card.Footer>
               <Button
-                variant="primary"
+                 variant="contained"
+                 color="primary"
                 onClick={() => history.push(`/story/${props.dataStory.id}`)}
               >
                 Read More...
