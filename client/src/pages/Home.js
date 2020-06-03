@@ -100,7 +100,7 @@ export default () => {
       </Row>
       ) : (
         <div>
-          <img src={RoomEmpty} className="imageRoomEmpty"></img>
+          <img src={RoomEmpty} className="imageRoomEmpty" alt=""></img>
           <h3>It's quite empty in here, create a room to make a stOURy!</h3>
         </div>
       )}

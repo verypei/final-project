@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import { CardDeck, Container, Row, Spinner } from "react-bootstrap";
+import { Container, Row, Spinner } from "react-bootstrap";
 import Story from "../components/Story";
 import { useSelector, useDispatch } from "react-redux";
 import { getStories } from "../store/actions/storiesAction";
-import logo1 from "../assets/logo1.png";
 
 export default () => {
   const dispatch = useDispatch();

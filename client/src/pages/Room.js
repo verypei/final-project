@@ -31,11 +31,7 @@ export default (props) => {
 
   const [currentStoryText, setCurrentStoryText] = useState("");
 
-  const [speechRecognitionResult, setSpeechRecognitionResult] = useState("");
-
   const [isCurrentUserTurn, setIsCurrentUserTurn] = useState(false);
-
-  const [isFinishDialogShown, setIsFinishDialogShown] = useState(false);
 
   useEffect(() => {
     console.log(props);
@@ -80,7 +76,7 @@ export default (props) => {
   }, [listening, isCurrentUserTurn, stop]);
 
   useEffect(() => {
-    if (currentRoom && currentRoom.status === "finished" && !isFinishDialogShown) {
+    if (currentRoom && currentRoom.status === "finished") {
       swal({
         icon: "warning",
         text: "Time is up!!",

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Col} from "react-bootstrap";
+import { Card, Col} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 

@@ -4,7 +4,6 @@ import { CardDeck, Card, Button, Spinner } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getStoryDetail } from "../store/actions/storiesAction";
 import Speech from "speak-tts";
-import html2canvas from "html2canvas";
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import jsPDF from "jspdf";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
@@ -97,11 +96,12 @@ export default () => {
     //   pdf.addImage(imgData, "JPEG", 0, 0);
     //   pdf.save(storyDetail.title + ".pdf");
         const pdf = new jsPDF();
+        console.log(storyDetail.content.split('\n').join('<br />'));
         pdf.fromHTML((
           `
           <h1>${storyDetail.title}</h1>
           <h2 style="font-size: 1em">Created By: ${storyDetail.createdBy} | Theme: ${storyDetail.theme}</h2>
-          <p>${storyDetail.content}</p>
+          <p>${storyDetail.content ? storyDetail.content.split('\n').join('<br />') : null}</p>
           `
         ), 15, 15, {
           width: 180
