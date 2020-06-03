@@ -7,6 +7,7 @@ import MicIcon from "@material-ui/icons/Mic";
 import MicOffIcon from "@material-ui/icons/MicOff";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import swal from "sweetalert";
+import UserListItem from "../components/UserListItem";
 
 export default (props) => {
   const history = useHistory();
@@ -116,6 +117,15 @@ export default (props) => {
         <Container>
           <div>
             <h2>Global Countdown : {currentRound.globalCountdown}</h2>
+            <div>
+              {
+                currentRoom.users.map((user, index) => {
+                  return (
+                    <UserListItem userName={user.name} currentTurn={currentRound.currentUserIndex === index} />
+                  )
+                })
+              }
+            </div>
             <h3>
               {" "}
               current turn :{" "}

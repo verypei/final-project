@@ -349,3 +349,32 @@
   justify-content: center;
   padding: 5px 0px;
 }
+
+.user-list-item {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  border: 1px solid #c0c0c0;
+  background-color: #ffffff;
+  margin: 5px;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.user-list-item * {
+  display: block;
+}
+
+.user-list-item span {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  font-size: 0.9em;
+}
+
+.user-list-item.current-turn {
+  background-color: #36a5ff;
+  color: #ffffff;
+}
