@@ -100,11 +100,6 @@ export default () => {
   //   </>
   // );
 
-  if(localStorage.getItem('username')) {
-    //history.push("/home");
-    return <Redirect to="/home" />
-  }
-
   const classes = useStyles();
 
   if (localStorage.getItem("username")) {
