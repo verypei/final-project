@@ -308,6 +308,7 @@ function saveRoomStory(room) {
     title: room.name,
     content: room.round.allText,
     theme: room.theme,
+    language: room.language,
     createdBy: room.users.map((user) => user.name).join(", "),
   };
   stories.create(obj).catch((err) => {
